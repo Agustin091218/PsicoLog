@@ -1,0 +1,4 @@
+<h1><%= @patient.name %></h1>
+
+<%= link_to 'Back', patients_path %>
+<%= link_to 'New Session Note', new_session_note_path(patient_id: @patient) %>

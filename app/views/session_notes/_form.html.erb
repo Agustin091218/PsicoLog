@@ -1,0 +1,10 @@
+<%= form_with model: @session_note do |f| %>
+  <div>
+    <%= f.label :content %>
+    <%= f.text_area :content %>
+  </div>
+
+  <%= f.hidden_field :patient_id %>
+
+  <%= f.submit 'Save' %>
+<% end %>
