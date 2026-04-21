@@ -1,0 +1,30 @@
+# Environment
+.env
+.env.*
+!.env.example
+
+# Rails
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+/storage/*
+!/storage/.keep
+/public/assets
+/public/packs
+/public/packs-test
+*.pid
+
+# Dependencies
+/vendor/bundle
+
+# Coverage
+/coverage/
+
+# System
+.DS_Store
+*.swp
+*.swo
+
+# Docker
+.docker/
