@@ -11,7 +11,7 @@ class CreateUsers < ActiveRecord::Migration[7.2]
       t.timestamps
     end
 
-    add_index :users, :email, unique: true
-    add_index :users, :deleted_at 
+    add_index :users, :email, unique: true, where: "deleted_at IS NULL"
+    add_index :users, :deleted_at
   end
 end
