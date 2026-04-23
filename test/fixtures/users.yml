@@ -1,17 +1,12 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+andy:
+  first_name: Andy
+  last_name: Riveros
+  email: andy@psicolog.test
+  phone: "1122334455"
+  password_digest: fake_hash_one
 
-one:
-  first_name: MyString
-  last_name: MyString
-  email: MyString
-  phone: MyString
-  password_digest: MyString
-  deleted_at: 2026-04-23 16:04:24
-
-two:
-  first_name: MyString
-  last_name: MyString
-  email: MyString
-  phone: MyString
-  password_digest: MyString
-  deleted_at: 2026-04-23 16:04:24
+maria:
+  first_name: Maria
+  last_name: Gomez
+  email: maria@psicolog.test
+  password_digest: fake_hash_two
