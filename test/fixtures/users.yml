@@ -1,0 +1,12 @@
+andy:
+  first_name: Andy
+  last_name: Riveros
+  email: andy@psicolog.test
+  phone: "1122334455"
+  password_digest: fake_hash_one
+
+maria:
+  first_name: Maria
+  last_name: Gomez
+  email: maria@psicolog.test
+  password_digest: fake_hash_two
