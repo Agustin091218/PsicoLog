@@ -20,6 +20,9 @@ services:
       RAILS_ENV: development
     volumes:
       - .:/rails
+      - rails_log:/rails/log
+      - rails_tmp:/rails/tmp
+      - rails_storage:/rails/storage
     ports:
       - "${WEB_PORT:-3000}:3000"
     depends_on:
@@ -34,3 +37,6 @@ services:
 
 volumes:
   postgres_data:
+  rails_log:
+  rails_tmp:
+  rails_storage:
