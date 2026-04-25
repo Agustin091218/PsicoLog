@@ -1,0 +1,114 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Run RuboCop
+        run: bin/rubocop
+
+      - name: Run Brakeman
+        run: bin/brakeman -q
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    services:
+      db:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: psicolog_user
+          POSTGRES_PASSWORD: psicolog_password
+          POSTGRES_DB: psicolog_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U psicolog_user -d psicolog_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      CI: "true"
+      RAILS_ENV: test
+      POSTGRES_USER: psicolog_user
+      POSTGRES_PASSWORD: psicolog_password
+      POSTGRES_DB: psicolog_test
+      POSTGRES_HOST: 127.0.0.1
+      POSTGRES_PORT: "5432"
+      DATABASE_URL: postgresql://psicolog_user:psicolog_password@127.0.0.1:5432/psicolog_test
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Prepare test database
+        run: bin/rails db:prepare
+
+      - name: Run test suite
+        run: bin/rails test
+
+  compose-smoke:
+    name: Compose smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate compose configuration
+        run: APP_ENV_FILE=.env.example docker compose config
+
+      - name: Build and boot compose stack
+        run: APP_ENV_FILE=.env.example docker compose up --build --wait --wait-timeout 120
+
+      - name: Wait for Rails health endpoint
+        run: curl -fsS http://127.0.0.1:3000/up >/dev/null
+
+      - name: Verify Rails runner inside container
+        run: APP_ENV_FILE=.env.example docker compose exec -T web bin/rails runner "puts \"ci-smoke-ok\""
+
+      - name: Show compose status on failure
+        if: failure()
+        run: APP_ENV_FILE=.env.example docker compose ps
+
+      - name: Show web logs on failure
+        if: failure()
+        run: APP_ENV_FILE=.env.example docker compose logs web
+
+      - name: Tear down compose stack
+        if: always()
+        run: APP_ENV_FILE=.env.example docker compose down -v --remove-orphans
