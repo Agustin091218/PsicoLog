@@ -9,15 +9,10 @@ Quick guide to run this project with Docker (development environment).
 ## Initial setup
 
 1. Clone the repository.
-2. Create a `.env` file in the project root with this content:
+2. Copy the committed environment template:
 
-```env
-POSTGRES_USER=psicolog_user
-POSTGRES_PASSWORD=psicolog_password
-POSTGRES_DB=psicolog_development
-POSTGRES_HOST=db
-POSTGRES_PORT=5432
-DATABASE_URL=postgresql://psicolog_user:psicolog_password@db:5432/psicolog_development
+```bash
+cp .env.example .env
 ```
 
 ## Start the project
@@ -78,6 +73,10 @@ docker compose exec web ./bin/rails db:migrate
 # stop containers
 docker compose down
 ```
+
+## CI
+
+GitHub Actions uses `.env.example` through `APP_ENV_FILE=.env.example` for the Docker Compose smoke check, so keep that file aligned with the variables the stack needs to boot.
 
 ## Orphan container cleanup
 
