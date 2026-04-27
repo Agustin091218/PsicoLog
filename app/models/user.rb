@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :patients
   default_scope { where(deleted_at: nil) }
 
   validates :first_name, presence: true
