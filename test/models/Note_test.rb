@@ -1,71 +1,121 @@
-# spec/models/note_spec.rb
-require 'rails_helper'
+require "test_helper"
 
-RSpec.describe Note, type: :model do
-  describe 'associations' do
-    it { should belong_to(:patient) }
+class NoteTest < ActiveSupport::TestCase
+  setup do
+    user = User.create!(
+      first_name: "Test",
+      last_name: "User",
+      email: "note_test_#{SecureRandom.hex(6)}@example.com",
+      password_digest: "123456"
+    )
+
+    @patient = Patient.create!(
+      user: user,
+      first_name: "Juan",
+      last_name: "Perez"
+    )
   end
 
-  describe 'validations' do
-    it { should validate_presence_of(:patient_id) }
-    it { should validate_presence_of(:note_type) }
-    it { should validate_presence_of(:recorded_at) }
-    it { should validate_presence_of(:content) }
-
-    it do
-      should validate_inclusion_of(:note_type)
-        .in_array(%w[session_note general_note quick_note])
-    end
+  test "valid note" do
+    note = build_note
+    assert note.valid?
   end
 
-  describe 'scopes' do
-    let!(:active_note) { Note.create!(patient_id: 1, note_type: 'general_note', recorded_at: Time.current, content: 'Active', deleted_at: nil) }
-    let!(:deleted_note) { Note.create!(patient_id: 1, note_type: 'general_note', recorded_at: Time.current, content: 'Deleted', deleted_at: Time.current) }
-    let!(:old_note) { Note.create!(patient_id: 1, note_type: 'general_note', recorded_at: 1.day.ago, content: 'Old') }
-    let!(:new_note) { Note.create!(patient_id: 1, note_type: 'general_note', recorded_at: Time.current, content: 'New') }
-
-    it '.active returns only notes where deleted_at is nil' do
-      expect(Note.active).to include(active_note)
-      expect(Note.active).not_to include(deleted_note)
-    end
-
-    it '.ordered returns notes sorted by recorded_at in descending order' do
-      expect(Note.ordered.first).to eq(new_note)
-      expect(Note.ordered.last).to eq(old_note)
-    end
+  test "invalid without patient" do
+    note = build_note(patient: nil)
+    assert_not note.valid?
   end
 
-  describe 'instance methods' do
-    let(:note) { Note.create!(patient_id: 1, note_type: 'quick_note', recorded_at: Time.current, content: 'Test content') }
-
-    describe '#soft_delete' do
-      it 'sets deleted_at timestamp' do
-        expect { note.soft_delete }.to change { note.deleted_at }.from(nil)
-      end
-    end
-
-    describe '#restore' do
-      it 'sets deleted_at back to nil' do
-        note.soft_delete
-        expect { note.restore }.to change { note.deleted_at }.to(nil)
-      end
-    end
-
-    describe '#active?' do
-      it 'returns true if deleted_at is nil' do
-        expect(note.active?).to be true
-      end
-
-      it 'returns false if deleted_at is present' do
-        note.soft_delete
-        expect(note.active?).to be false
-      end
-    end
+  test "invalid without note_type" do
+    note = build_note(note_type: nil)
+    assert_not note.valid?
   end
 
-  describe 'class methods' do
-    it '.note_types returns the correct constants' do
-      expect(Note.note_types).to eq(%w[session_note general_note quick_note])
-    end
+  test "invalid with unsupported note_type" do
+    note = build_note(note_type: "invalid_type")
+    assert_not note.valid?
+  end
+
+  test "invalid without recorded_at" do
+    note = build_note(recorded_at: nil)
+    assert_not note.valid?
+  end
+
+  test "invalid without content" do
+    note = build_note(content: nil)
+    assert_not note.valid?
+  end
+
+  test "active scope only returns non-deleted notes" do
+    active_note = build_note(content: "active")
+    deleted_note = build_note(content: "deleted", deleted_at: Time.current)
+    active_note.save!
+    deleted_note.save!
+
+    assert_includes Note.active, active_note
+    assert_not_includes Note.active, deleted_note
+  end
+
+  test "ordered scope returns newest first" do
+    old_note = build_note(recorded_at: 1.day.ago, content: "old")
+    new_note = build_note(recorded_at: Time.current, content: "new")
+    old_note.save!
+    new_note.save!
+
+    assert_equal new_note, Note.ordered.first
+    assert_equal old_note, Note.ordered.last
+  end
+
+  test "soft_delete sets deleted_at" do
+    note = build_note
+    note.save!
+
+    assert_nil note.deleted_at
+    note.soft_delete
+    note.reload
+    assert_not_nil note.deleted_at
+  end
+
+  test "restore clears deleted_at" do
+    note = build_note
+    note.save!
+    note.soft_delete
+
+    note.restore
+    note.reload
+    assert_nil note.deleted_at
+  end
+
+  test "active? returns true when deleted_at is nil" do
+    note = build_note
+    note.save!
+
+    assert note.active?
+  end
+
+  test "active? returns false when deleted_at is present" do
+    note = build_note
+    note.save!
+    note.soft_delete
+    note.reload
+
+    assert_not note.active?
+  end
+
+  test "note_types exposes the expected constants" do
+    assert_equal %w[session_note general_note quick_note], Note.note_types
+  end
+
+  private
+
+  def build_note(attributes = {})
+    defaults = {
+      patient: @patient,
+      note_type: "quick_note",
+      recorded_at: Time.current,
+      content: "test content"
+    }
+
+    Note.new(defaults.merge(attributes))
   end
 end
