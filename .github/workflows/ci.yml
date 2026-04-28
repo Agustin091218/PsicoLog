@@ -34,8 +34,8 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Run RuboCop
-        run: bin/rubocop
+      - name: Run RuboCop (safe autocorrect)
+        run: bin/rubocop -a
 
       - name: Run Brakeman
         run: bin/brakeman -q
