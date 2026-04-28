@@ -7,6 +7,7 @@ fi
 
 # If running the rails server then create or migrate existing database
 if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
+  rm -f /rails/tmp/pids/server.pid
   ./bin/rails db:prepare
 fi
 
