@@ -11,7 +11,7 @@ class CreatePatients < ActiveRecord::Migration[7.2]
 
       t.timestamps
     end
-    
+
     add_index :patients, :deleted_at
   end
 end
