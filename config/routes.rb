@@ -10,6 +10,12 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   resources :users, only: %i[new create]
-  resources :sessions, only: %i[new create destroy]
-  root "sessions#new"
+  resources :sessions, only: %i[new create]
+  get "sign_in", to: "sessions#new", as: :sign_in
+  delete "sign_out", to: "sessions#destroy", as: :sign_out
+  resources :patients do
+    resources :notes
+    get "summary", on: :member
+  end
+  root "patients#index"
 end

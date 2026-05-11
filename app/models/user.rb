@@ -1,21 +1,16 @@
 class User < ApplicationRecord
+  include SoftDeletable
+
+  has_secure_password
+
   has_many :patients
-  default_scope { where(deleted_at: nil) }
+  has_many :notes, through: :patients
 
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true, uniqueness: { case_sensitive: false }
-  validates :password_digest, presence: true
 
-  def soft_delete
-    update(deleted_at: Time.current)
-  end
-
-  def restore
-    update(deleted_at: nil)
-  end
-
-  def deleted?
-    deleted_at.present?
+  def full_name
+    "#{first_name} #{last_name}".strip
   end
 end

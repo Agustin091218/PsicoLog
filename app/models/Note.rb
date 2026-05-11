@@ -1,4 +1,6 @@
 class Note < ApplicationRecord
+  include SoftDeletable
+
   NOTE_TYPES = %w[session_note general_note quick_note].freeze
 
   belongs_to :patient
@@ -8,20 +10,7 @@ class Note < ApplicationRecord
   validates :recorded_at, presence: true
   validates :content, presence: true
 
-  scope :active, -> { where(deleted_at: nil) }
   scope :ordered, -> { order(recorded_at: :desc) }
-
-  def soft_delete
-    update(deleted_at: Time.current)
-  end
-
-  def restore
-    update(deleted_at: nil)
-  end
-
-  def active?
-    deleted_at.nil?
-  end
 
   def self.note_types
     NOTE_TYPES
