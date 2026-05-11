@@ -42,7 +42,7 @@
           <span class="text-xs font-medium px-2.5 py-1 rounded-full <%= note.note_type == 'session_note' ? 'bg-green-50 text-green-700' : (note.note_type == 'initial_interview' ? 'bg-amber-50 text-amber-700' : (note.note_type == 'follow_up' ? 'bg-blue-50 text-blue-700' : (note.note_type == 'emergency' ? 'bg-red-50 text-red-700' : 'bg-gray-100 text-gray-600'))) %>"><%= note.translated_type %></span>
           <span class="text-xs text-gray-400"><%= l(note.recorded_at, format: :long) %></span>
         </div>
-        <p class="text-sm text-gray-600 leading-relaxed line-clamp-2 group-hover:text-gray-800 transition-colors"><%= truncate(note.content, length: 180) %></p>
+        <p class="text-sm text-gray-600 leading-relaxed line-clamp-2 group-hover:text-gray-800 transition-colors"><%= truncate(strip_tags(note.content), length: 180) %></p>
       <% end %>
     <% end %>
   </div>
