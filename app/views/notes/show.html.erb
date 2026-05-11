@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <div class="text-gray-700 leading-relaxed text-[15px] space-y-4">
-    <%= markdown(@note.content) %>
+  <div class="text-gray-700 leading-relaxed text-[15px] [&_p]:mb-3 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:text-gray-900 [&_h2]:mt-6 [&_h2]:mb-2 [&_ul]:list-disc [&_ul]:ml-5 [&_ol]:list-decimal [&_ol]:ml-5 [&_li]:mb-1">
+    <%= sanitize(@note.content) %>
   </div>
 </div>

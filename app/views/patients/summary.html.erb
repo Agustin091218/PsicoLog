@@ -34,7 +34,7 @@
           <span class="text-xs text-gray-400"><%= l(note.recorded_at, format: :long) %></span>
         </div>
         <div class="text-sm text-gray-600 leading-relaxed prose prose-sm max-w-none">
-          <%= markdown(truncate(note.content, length: 250, escape: false)) %>
+          <%= truncate(strip_tags(note.content), length: 250) %>
         </div>
         <%= link_to patient_note_path(@patient, note), class: "inline-flex items-center gap-1.5 mt-2 text-sm text-brand-600 hover:text-brand-700 font-medium transition-colors" do %>
           Leer nota completa

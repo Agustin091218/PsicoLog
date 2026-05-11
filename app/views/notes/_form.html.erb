@@ -47,18 +47,13 @@
       </button>
     </div>
 
-    <div class="flex gap-4" style="min-height: 330px;">
-      <%= f.text_area :content, required: true,
-          data: { note_editor_target: "textarea", action: "keyup->note-editor#updatePreview" },
-          placeholder: "Escribí tu nota acá...\n\nUsá **negrita**, _cursiva_ y - listas",
-          class: "flex-1 p-5 bg-white border-0 rounded-2xl outline-none text-sm leading-relaxed resize-none shadow-[0_2px_8px_rgba(0,0,0,0.04)] focus:shadow-[0_2px_12px_rgba(0,0,0,0.08)] transition-shadow",
-          style: "min-height: 330px; max-height: 400px;" %>
-      
-      <div data-note-editor-target="preview"
-           class="flex-1 p-5 bg-[#faf9f7] rounded-2xl text-sm text-gray-600 leading-relaxed overflow-y-auto prose-a:text-brand-600"
-           style="min-height: 330px; max-height: 400px;">
-        <p class="text-gray-300 italic text-xs">La vista previa aparece acá...</p>
-      </div>
+    <%= f.hidden_field :content, data: { note_editor_target: "field" } %>
+
+    <div data-note-editor-target="editor"
+         contenteditable="true"
+         class="p-5 bg-white border-0 rounded-2xl outline-none text-sm leading-relaxed shadow-[0_2px_8px_rgba(0,0,0,0.04)] focus:shadow-[0_2px_12px_rgba(0,0,0,0.08)] transition-shadow"
+         style="min-height: 330px;">
+      <%= sanitize(@note.content) if @note.persisted? %>
     </div>
   </div>
 
