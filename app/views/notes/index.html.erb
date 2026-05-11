@@ -23,6 +23,10 @@
       <%= f.search_field :content_cont, placeholder: "Buscar notas...",
           class: "w-full pl-10 pr-4 py-2.5 bg-white border-0 rounded-xl outline-none text-sm placeholder:text-gray-400 shadow-[0_2px_8px_rgba(0,0,0,0.04)] focus:shadow-[0_2px_12px_rgba(0,0,0,0.08)] transition-shadow" %>
     </div>
+    <%= f.select :note_type_eq, options_for_select(Note.translated_types.unshift(["Todos", ""]), params.dig(:q, :note_type_eq)),
+        {},
+        class: "px-3 py-2.5 bg-white border-0 rounded-xl text-sm text-gray-600 outline-none shadow-[0_2px_8px_rgba(0,0,0,0.04)] focus:shadow-[0_2px_12px_rgba(0,0,0,0.08)] transition-shadow cursor-pointer appearance-none pr-8",
+        style: "background-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239ca3af'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E\"); background-repeat: no-repeat; background-position: right 0.5rem center; background-size: 1rem;" %>
     <%= f.submit "Buscar", class: "px-4 py-2.5 bg-white text-sm font-medium text-gray-600 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_2px_12px_rgba(0,0,0,0.08)] transition-shadow cursor-pointer" %>
     <%= link_to patient_notes_path(@patient), class: "px-3 py-2.5 text-sm text-gray-400 hover:text-gray-600 transition-colors flex items-center" do %>
       <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
