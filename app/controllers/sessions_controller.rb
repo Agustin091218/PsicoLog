@@ -9,6 +9,7 @@ class SessionsController < ApplicationController
     user = User.active.find_by(email: session_params[:email]&.downcase)
 
     if user&.authenticate(session_params[:password])
+      reset_session
       session[:user_id] = user.id
       redirect_to session.delete(:return_to) || root_path, notice: "Signed in successfully."
     else
