@@ -6,12 +6,12 @@
     Pacientes
   <% end %>
 
-  <div class="flex items-start justify-between">
+  <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
     <div>
-      <h1 class="text-3xl font-bold text-gray-800 tracking-tight mb-1"><%= @patient.full_name %></h1>
+      <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 tracking-tight mb-1"><%= @patient.full_name %></h1>
       <p class="text-sm text-gray-400">Desde <%= l(@patient.created_at, format: :long) %></p>
     </div>
-    <div class="flex items-center gap-1">
+    <div class="flex items-center gap-1 flex-wrap">
       <%= link_to summary_patient_path(@patient), class: "inline-flex items-center gap-1.5 px-3 py-2 text-sm text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-xl transition-colors" do %>
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/></svg>
         Resumen

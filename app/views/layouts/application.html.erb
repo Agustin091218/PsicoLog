@@ -37,44 +37,44 @@
   <body class="bg-gray-50 text-gray-900 min-h-screen antialiased">
     <% if signed_in? %>
       <nav class="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-gray-200/60">
-        <div class="max-w-5xl mx-auto px-6 py-3 flex items-center justify-between">
+        <div class="max-w-5xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between">
           <div class="flex items-center gap-6">
             <%= link_to patients_path, class: "flex items-center gap-2" do %>
-              <img src="/logo.svg" alt="Psicolog" class="w-14 h-14">
-              <span class="font-semibold text-base text-gray-900">Psicolog</span>
+              <img src="/logo.svg" alt="Psicolog" class="w-10 h-10 sm:w-14 sm:h-14">
+              <span class="hidden sm:inline font-semibold text-base text-gray-900">Psicolog</span>
             <% end %>
             <%= link_to patients_path, class: "text-sm text-gray-500 hover:text-gray-900 transition-colors" do %>
               <svg class="w-4 h-4 inline-block mr-1 -mt-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-              Pacientes
+              <span class="hidden sm:inline">Pacientes</span>
             <% end %>
             <%= link_to notes_path, class: "text-sm text-gray-500 hover:text-gray-900 transition-colors" do %>
               <svg class="w-4 h-4 inline-block mr-1 -mt-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-              Notas
+              <span class="hidden sm:inline">Notas</span>
             <% end %>
           </div>
           <div class="flex items-center gap-4">
-            <span class="text-sm text-gray-500"><%= current_user.full_name %></span>
+            <span class="hidden sm:inline text-sm text-gray-500"><%= current_user.full_name %></span>
             <%= button_to sign_out_path, method: :delete, class: "text-sm text-gray-400 hover:text-red-500 transition-colors flex items-center gap-1" do %>
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
-              <span>Salir</span>
+              <span class="hidden sm:inline">Salir</span>
             <% end %>
           </div>
         </div>
       </nav>
     <% end %>
 
-    <main class="max-w-5xl mx-auto px-6 py-8">
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
       <%= yield %>
     </main>
     <% if signed_in? %>
     <div data-controller="quick-note">
       <button data-action="quick-note#open"
-        class="fixed bottom-6 right-6 w-14 h-14 bg-brand-500 hover:bg-brand-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all z-40 flex items-center justify-center">
-        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-12 h-12 sm:w-14 sm:h-14 bg-brand-500 hover:bg-brand-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all z-40 flex items-center justify-center">
+        <svg class="w-5 h-5 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
       </button>
 
       <div data-quick-note-target="modal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/30 backdrop-blur-sm">
-        <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg mx-4 p-6">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg mx-2 sm:mx-4 p-4 sm:p-6">
           <div class="flex items-center justify-between mb-4">
             <h2 class="text-lg font-semibold text-gray-900">Nota rápida</h2>
             <button data-action="quick-note#close" class="text-gray-400 hover:text-gray-600 p-1">
