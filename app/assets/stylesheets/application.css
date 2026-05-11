@@ -13,3 +13,106 @@
  *= require_tree .
  *= require_self
  */
+
+/* ── Trix Editor Custom Styles ── */
+
+.trix-editor-custom {
+  border: none !important;
+  outline: none !important;
+}
+
+.trix-editor-custom trix-toolbar {
+  background: white !important;
+  border: none !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  padding: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.trix-editor-custom .trix-button-row {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 1px !important;
+  padding: 6px 4px !important;
+}
+
+.trix-editor-custom .trix-button-group {
+  border: none !important;
+  margin-right: 6px !important;
+  display: flex !important;
+  gap: 1px !important;
+}
+
+.trix-editor-custom .trix-button-group-spacer {
+  flex: 1 !important;
+}
+
+.trix-editor-custom .trix-button {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0.5rem !important;
+  color: #6b7280 !important;
+  font-size: 0.8125rem !important;
+  padding: 6px 10px !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  min-width: 32px !important;
+  text-align: center !important;
+}
+
+.trix-editor-custom .trix-button:hover {
+  background: #f0f9ff !important;
+  color: #0ea5e9 !important;
+}
+
+.trix-editor-custom .trix-button.trix-active {
+  background: #e0f2fe !important;
+  color: #0284c7 !important;
+}
+
+.trix-editor-custom .trix-button--icon::before {
+  opacity: 0.6 !important;
+  filter: grayscale(0.3) !important;
+}
+
+.trix-editor-custom .trix-button:hover::before {
+  opacity: 0.85 !important;
+  filter: none !important;
+}
+
+.trix-editor-custom .trix-button.trix-active::before {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+.trix-editor-custom .trix-button-group--history-tools .trix-button {
+  opacity: 0.5 !important;
+}
+
+.trix-editor-custom .trix-button-group--history-tools .trix-button:hover {
+  opacity: 0.85 !important;
+}
+
+.trix-editor-custom trix-toolbar .trix-dialogs {
+  display: none !important;
+}
+
+.trix-editor-custom trix-editor {
+  border: none !important;
+  outline: none !important;
+  padding: 16px !important;
+  min-height: 240px !important;
+  font-size: 0.9375rem !important;
+  line-height: 1.7 !important;
+  color: #1f2937 !important;
+}
+
+.trix-editor-custom trix-editor:focus {
+  outline: none !important;
+}
+
+.trix-editor-custom trix-editor [data-trix-placeholder]::before {
+  content: attr(data-trix-placeholder);
+  color: #d1d5db !important;
+  font-style: italic !important;
+}
