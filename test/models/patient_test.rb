@@ -6,7 +6,8 @@ class PatientTest < ActiveSupport::TestCase
     first_name: "Test",
     last_name: "User",
     email: "test@example.com",
-    password_digest: "123456"
+    password: "123456",
+    password_confirmation: "123456"
     )
 
     @patient = Patient.new(

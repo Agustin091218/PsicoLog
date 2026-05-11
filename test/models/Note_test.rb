@@ -6,7 +6,8 @@ class NoteTest < ActiveSupport::TestCase
       first_name: "Test",
       last_name: "User",
       email: "note_test_#{SecureRandom.hex(6)}@example.com",
-      password_digest: "123456"
+      password: "123456",
+      password_confirmation: "123456"
     )
 
     @patient = Patient.create!(
@@ -86,20 +87,20 @@ class NoteTest < ActiveSupport::TestCase
     assert_nil note.deleted_at
   end
 
-  test "active? returns true when deleted_at is nil" do
+  test "deleted? returns false when deleted_at is nil" do
     note = build_note
     note.save!
 
-    assert note.active?
+    assert_not note.deleted?
   end
 
-  test "active? returns false when deleted_at is present" do
+  test "deleted? returns true when deleted_at is present" do
     note = build_note
     note.save!
     note.soft_delete
     note.reload
 
-    assert_not note.active?
+    assert note.deleted?
   end
 
   test "note_types exposes the expected constants" do
