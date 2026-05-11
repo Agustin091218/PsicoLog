@@ -31,7 +31,7 @@
 <% end %>
 
 <% if @notes.any? %>
-  <div class="space-y-6">
+  <div class="space-y-8">
     <% @notes.each do |note| %>
       <%= link_to patient_note_path(@patient, note), class: "block group" do %>
         <div class="flex items-baseline gap-4 mb-1.5">

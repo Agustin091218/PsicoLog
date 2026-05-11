@@ -50,11 +50,21 @@ export default class extends Controller {
 
     if (selected.length === 0) {
       if (wrapper === "\n- ") {
+        // Insert list marker at cursor
         textarea.value =
           textarea.value.substring(0, start) + wrapper +
           textarea.value.substring(end)
         textarea.selectionStart = start + wrapper.length
         textarea.selectionEnd = start + wrapper.length
+      } else {
+        // Insert wrapping markers and place cursor between them
+        const placeholder = wrapper === "**" ? "texto" : "texto"
+        textarea.value =
+          textarea.value.substring(0, start) +
+          wrapper + placeholder + wrapper +
+          textarea.value.substring(end)
+        textarea.selectionStart = start + wrapper.length
+        textarea.selectionEnd = start + wrapper.length + placeholder.length
       }
       textarea.focus()
       this.updatePreview()
@@ -77,26 +87,23 @@ export default class extends Controller {
 
     let html = text
 
-    // Escape HTML
     html = html.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
 
-    // Headings (##)
     html = html.replace(/^## (.+)$/gm, '<h2 class="text-base font-semibold text-gray-900 mt-3 mb-1">$1</h2>')
 
-    // Bold (**text**)
     html = html.replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold">$1</strong>')
 
-    // Italic (_text_)  — avoid matching URLs with underscores
-    html = html.replace(/(^|\s)_([^_]+)_(\s|$|[.,!?;:])/g, '$1<em class="italic">$2</em>$3')
+    html = html.replace(/(^|\s)_([^_]+)_(?=\s|$|[.,!?;:])/g, '$1<em class="italic">$2</em>')
 
-    // List items (lines starting with -)
     html = html.replace(/^- (.+)$/gm, '<li class="ml-4 list-disc">$1</li>')
 
-    // Wrap consecutive <li> in <ul>
-    html = html.replace(/((?:<li[^>]*>.*?<\/li>\n?)+)/g, '<ul class="mb-2">$1</ul>')
+    html = html.replace(/((?:<li[^>]*>.*?<\/li>\s*)+)/g, '<ul class="mb-2">$1</ul>')
 
-    // Line breaks
+    html = html.replace(/\n{2,}/g, "</p><p>")
+
     html = html.replace(/\n/g, "<br>")
+
+    if (!html.startsWith("<")) html = "<p>" + html + "</p>"
 
     return html
   }

@@ -26,7 +26,7 @@
 <% end %>
 
 <% if @patients.any? %>
-  <div class="space-y-px">
+  <div class="space-y-2">
     <% @patients.each do |patient| %>
       <%= link_to patient_path(patient), class: "flex items-center justify-between px-5 py-4 bg-white first:rounded-t-2xl last:rounded-b-2xl hover:bg-gray-50/80 transition-colors group" do %>
         <div>
