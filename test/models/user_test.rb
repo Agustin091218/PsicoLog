@@ -24,32 +24,32 @@ class UserTest < ActiveSupport::TestCase
   test "requires first_name" do
     user = User.new(valid_attributes.except(:first_name))
     assert_not user.valid?
-    assert_includes user.errors[:first_name], "can't be blank"
+    assert_includes user.errors[:first_name], "no puede estar en blanco"
   end
 
   test "requires last_name" do
     user = User.new(valid_attributes.except(:last_name))
     assert_not user.valid?
-    assert_includes user.errors[:last_name], "can't be blank"
+    assert_includes user.errors[:last_name], "no puede estar en blanco"
   end
 
   test "requires email" do
     user = User.new(valid_attributes.except(:email))
     assert_not user.valid?
-    assert_includes user.errors[:email], "can't be blank"
+    assert_includes user.errors[:email], "no puede estar en blanco"
   end
 
   test "requires password" do
     user = User.new(valid_attributes.except(:password, :password_confirmation))
     assert_not user.valid?
-    assert_includes user.errors[:password], "can't be blank"
+    assert_includes user.errors[:password], "no puede estar en blanco"
   end
 
   test "email must be unique" do
     User.create!(valid_attributes)
     duplicate = User.new(valid_attributes.merge(first_name: "Otro"))
     assert_not duplicate.valid?
-    assert_includes duplicate.errors[:email], "has already been taken"
+    assert_includes duplicate.errors[:email], "ya está en uso"
   end
 
   test "email uniqueness is case insensitive" do
@@ -91,3 +91,4 @@ class UserTest < ActiveSupport::TestCase
     user.restore
     assert_not_nil User.active.find_by(id: user.id)
   end
+end

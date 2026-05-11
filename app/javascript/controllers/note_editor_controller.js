@@ -1,45 +1,51 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["textarea", "quickNote"]
+  static targets = ["editor", "field"]
 
-  bold() {
-    this.wrapSelection("**")
+  connect() {
+    this.boundSync = this.syncContent.bind(this)
+    this.element.addEventListener("submit", this.boundSync)
   }
 
-  italic() {
-    this.wrapSelection("_")
+  disconnect() {
+    this.element.removeEventListener("submit", this.boundSync)
   }
 
-  list() {
-    this.wrapSelection("\n- ")
+  syncContent() {
+    this.fieldTarget.value = this.editorTarget.innerHTML
   }
 
-  quickNote() {
-    const textarea = this.textareaTarget
-    const now = new Date().toLocaleString()
-    textarea.value = `Quick note — ${now}\n\n`
-    textarea.focus()
-    textarea.selectionStart = textarea.value.length
+  bold(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    this.editorTarget.focus()
+    document.execCommand("bold")
   }
 
-  wrapSelection(wrapper) {
-    const textarea = this.textareaTarget
-    const start = textarea.selectionStart
-    const end = textarea.selectionEnd
-    const selected = textarea.value.substring(start, end)
+  italic(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    this.editorTarget.focus()
+    document.execCommand("italic")
+  }
 
-    if (selected.length === 0) return
+  list(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    this.editorTarget.focus()
+    document.execCommand("insertUnorderedList")
+  }
 
-    textarea.value =
-      textarea.value.substring(0, start) +
-      wrapper +
-      selected +
-      wrapper +
-      textarea.value.substring(end)
-
-    textarea.selectionStart = start + wrapper.length
-    textarea.selectionEnd = end + wrapper.length
-    textarea.focus()
+  quickNote(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    const now = new Date().toLocaleString("es-AR", {
+      dateStyle: "medium",
+      timeStyle: "short"
+    })
+    this.editorTarget.focus()
+    document.execCommand("insertHTML", false,
+      "<h2>Nota rápida — " + now + "</h2><p><br></p>")
   }
 }

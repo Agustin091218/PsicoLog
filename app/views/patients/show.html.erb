@@ -1,24 +1,143 @@
 <%= render "shared/flash" %>
 
-<div class="flex items-center justify-between mb-6">
-  <h1 class="text-2xl font-semibold"><%= @patient.full_name %></h1>
-  <div class="flex items-center gap-3">
-    <%= link_to "Summary", summary_patient_path(@patient),
-        class: "text-sm text-brand-600 hover:underline" %>
-    <%= link_to "Notes", patient_notes_path(@patient),
-        class: "text-sm text-gray-500 hover:text-gray-700" %>
-    <%= link_to "Edit", edit_patient_path(@patient),
-        class: "text-sm text-gray-500 hover:text-gray-700" %>
-    <%= button_to "Archive", patient_path(@patient), method: :delete,
-        class: "text-sm text-red-500 hover:text-red-700",
-        form: { data: { turbo_confirm: "Archive this patient?" } } %>
+<div class="mb-10">
+  <%= link_to patients_path, class: "inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-600 transition-colors mb-4" do %>
+    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    Pacientes
+  <% end %>
+
+  <div class="flex items-start justify-between">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-800 tracking-tight mb-1"><%= @patient.full_name %></h1>
+      <p class="text-sm text-gray-400">Desde <%= l(@patient.created_at, format: :long) %></p>
+    </div>
+    <div class="flex items-center gap-1">
+      <%= link_to summary_patient_path(@patient), class: "inline-flex items-center gap-1.5 px-3 py-2 text-sm text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-xl transition-colors" do %>
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/></svg>
+        Resumen
+      <% end %>
+      <%= link_to patient_notes_path(@patient), class: "inline-flex items-center gap-1.5 px-3 py-2 text-sm text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-xl transition-colors" do %>
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+        Notas
+        <% if @total_notes > 0 %>
+          <span class="ml-0.5 text-xs text-gray-300"><%= @total_notes %></span>
+        <% end %>
+      <% end %>
+      <%= link_to edit_patient_path(@patient), class: "inline-flex items-center gap-1.5 px-3 py-2 text-sm text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-xl transition-colors" do %>
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        Editar
+      <% end %>
+      <%= button_to patient_path(@patient), method: :delete,
+          class: "inline-flex items-center gap-1.5 px-3 py-2 text-sm text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-colors",
+          form: { data: { turbo_confirm: "¿Archivar este paciente?" } } do %>
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+        Archivar
+      <% end %>
+    </div>
   </div>
 </div>
 
-<div class="bg-white rounded-lg border border-gray-200 p-6 text-sm text-gray-600">
-  <p><strong class="text-gray-900">Added:</strong> <%= @patient.created_at.strftime("%B %d, %Y") %></p>
-</div>
+<div class="space-y-8">
+  <%# Información del paciente %>
+  <div class="flex items-start gap-6">
+    <div class="flex-1">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-9 h-9 rounded-full bg-brand-50 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-brand-600" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </div>
+        <div>
+          <p class="text-sm text-gray-400">Atendido por</p>
+          <p class="text-sm font-medium text-gray-700"><%= @patient.user.full_name %></p>
+        </div>
+      </div>
+    </div>
 
-<div class="mt-4">
-  <%= link_to "Back to patients", patients_path, class: "text-sm text-gray-500 hover:underline" %>
+    <% if @patient.user.email.present? %>
+      <div class="flex-1 border-l border-gray-100 pl-6">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-9 h-9 rounded-full bg-brand-50 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-brand-600" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </div>
+          <div>
+            <p class="text-sm text-gray-400">Correo</p>
+            <a href="mailto:<%= @patient.user.email %>" class="text-sm font-medium text-brand-600 hover:text-brand-700 transition-colors">
+              <%= @patient.user.email %>
+            </a>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <% if @patient.user.phone.present? %>
+      <div class="flex-1 border-l border-gray-100 pl-6">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-9 h-9 rounded-full bg-brand-50 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-brand-600" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          </div>
+          <div>
+            <p class="text-sm text-gray-400">Teléfono</p>
+            <a href="tel:<%= @patient.user.phone %>" class="text-sm font-medium text-brand-600 hover:text-brand-700 transition-colors">
+              <%= @patient.user.phone %>
+            </a>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Entrevista inicial (pinned) %>
+  <% if @initial_interview %>
+    <div class="border border-brand-200/60 bg-brand-50/30 rounded-2xl p-6">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="px-2.5 py-0.5 text-xs font-medium bg-brand-100 text-brand-700 rounded-full">
+          <%= @initial_interview.translated_type %>
+        </span>
+        <span class="text-xs text-gray-400"><%= l(@initial_interview.recorded_at, format: :long) %></span>
+      </div>
+      <div class="text-sm text-gray-700 leading-relaxed prose-sm max-w-none mb-4">
+        <%= sanitize @initial_interview.content %>
+      </div>
+      <%= link_to patient_note_path(@patient, @initial_interview), class: "inline-flex items-center gap-1 text-xs text-brand-600 hover:text-brand-700 font-medium transition-colors" do %>
+        Ver nota completa
+        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%# Notas recientes %>
+  <% if @recent_notes.any? %>
+    <div>
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-sm font-medium text-gray-400 uppercase tracking-wider">Notas recientes</h2>
+        <%= link_to patient_notes_path(@patient), class: "text-xs text-brand-600 hover:text-brand-700 font-medium transition-colors" do %>
+          Ver todas &rarr;
+        <% end %>
+      </div>
+      <div class="space-y-5">
+        <% @recent_notes.each do |note| %>
+          <div class="group">
+            <%= link_to patient_note_path(@patient, note), class: "block" do %>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-sm font-medium text-gray-700 group-hover:text-brand-600 transition-colors">
+                  <%= note.translated_type %>
+                </span>
+                <span class="text-xs text-gray-300"><%= l(note.recorded_at, format: :short) %></span>
+              </div>
+              <p class="text-sm text-gray-400 leading-relaxed line-clamp-2">
+                <%= truncate(strip_tags(note.content), length: 200) %>
+              </p>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% elsif !@initial_interview %>
+    <div class="text-center py-16">
+      <p class="text-gray-300 text-sm">Sin notas todavía.</p>
+      <%= link_to new_patient_note_path(@patient), class: "inline-flex items-center gap-1.5 mt-4 px-4 py-2 bg-brand-600 text-white rounded-xl hover:bg-brand-700 text-sm font-medium transition-colors" do %>
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        Crear primera nota
+      <% end %>
+    </div>
+  <% end %>
 </div>
