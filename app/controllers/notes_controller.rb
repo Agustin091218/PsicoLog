@@ -1,10 +1,16 @@
 class NotesController < ApplicationController
-  before_action :set_patient
+  before_action :set_patient, except: :all
   before_action :set_note, only: %i[show edit update destroy]
 
   def index
     @q = @patient.notes.active.ransack(params[:q])
     @notes = @q.result.ordered
+  end
+
+  def all
+    patient_ids = current_user.patients.active.pluck(:id)
+    @q = Note.active.where(patient_id: patient_ids).ransack(params[:q])
+    @notes = @q.result.ordered.includes(:patient)
   end
 
   def show
