@@ -26,34 +26,15 @@
     </div>
   </div>
 
-  <div data-controller="note-editor">
-    <div class="flex items-center gap-0.5 mb-3">
-      <button type="button" data-action="mousedown->note-editor#bold" title="Negrita"
-          class="p-2 text-gray-400 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors">
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M15.6 10.79c.97-.67 1.65-1.77 1.65-2.79 0-2.26-1.75-4-4-4H7v14h7.04c2.09 0 3.71-1.7 3.71-3.79 0-1.52-.86-2.82-2.15-3.42zM10 6.5h3c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-3v-3zm3.5 9H10v-3h3.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5z"/></svg>
-      </button>
-      <button type="button" data-action="mousedown->note-editor#italic" title="Cursiva"
-          class="p-2 text-gray-400 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors">
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M10 4v3h2.21l-3.42 8H6v3h8v-3h-2.21l3.42-8H18V4h-8z"/></svg>
-      </button>
-      <button type="button" data-action="mousedown->note-editor#list" title="Lista"
-          class="p-2 text-gray-400 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors">
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
-      </button>
-      <button type="button" data-action="mousedown->note-editor#quickNote" title="Nota rápida"
-          class="p-2 text-gray-400 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors">
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3C9.03 3 5.5 5.39 3.55 9h2.19c1.55-2.44 4.16-4 7.26-4 4.69 0 8.5 3.81 8.5 8.5s-3.81 8.5-8.5 8.5c-3.03 0-5.59-1.59-7.07-3.95H3.82C5.5 21.62 8.96 24 13 24c6.08 0 11-4.93 11-11S19.08 3 13 3zm-1 7v5l4.25 2.52.77-1.28-3.52-2.09V10H12z"/></svg>
-      </button>
-    </div>
+  <div class="space-y-3" data-controller="note-editor">
+    <%= f.hidden_field :content, id: "note_content_input" %>
+    <trix-editor input="note_content_input" class="min-h-[280px] prose max-w-none"></trix-editor>
 
-    <%= f.hidden_field :content, data: { note_editor_target: "field" } %>
-
-    <div data-note-editor-target="editor"
-         contenteditable="true"
-         class="p-5 bg-white border-0 rounded-2xl outline-none text-sm leading-relaxed shadow-[0_2px_8px_rgba(0,0,0,0.04)] focus:shadow-[0_2px_12px_rgba(0,0,0,0.08)] transition-shadow"
-         style="min-height: 330px;">
-      <%= sanitize(note.content) if note.persisted? %>
-    </div>
+    <button type="button" data-action="note-editor#quickNote"
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs text-gray-400 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-colors">
+      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3C9.03 3 5.5 5.39 3.55 9h2.19c1.55-2.44 4.16-4 7.26-4 4.69 0 8.5 3.81 8.5 8.5s-3.81 8.5-8.5 8.5c-3.03 0-5.59-1.59-7.07-3.95H3.82C5.5 21.62 8.96 24 13 24c6.08 0 11-4.93 11-11S19.08 3 13 3zm-1 7v5l4.25 2.52.77-1.28-3.52-2.09V10H12z"/></svg>
+      Nota rápida
+    </button>
   </div>
 
   <div class="flex gap-3 pt-6">

@@ -11,7 +11,7 @@ class Patient < ApplicationRecord
   scope :ordered, -> { order(created_at: :desc) }
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[first_name last_name created_at]
+    %w[first_name last_name email phone created_at]
   end
 
   def self.ransackable_associations(auth_object = nil)
