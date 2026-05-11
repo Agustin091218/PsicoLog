@@ -11,16 +11,16 @@ class SessionsController < ApplicationController
     if user&.authenticate(session_params[:password])
       reset_session
       session[:user_id] = user.id
-      redirect_to session.delete(:return_to) || root_path, notice: "Signed in successfully."
+      redirect_to session.delete(:return_to) || root_path, notice: "Sesión iniciada."
     else
-      flash.now[:alert] = "Invalid email or password."
+      flash.now[:alert] = "Email o contraseña incorrectos."
       render :new, status: :unprocessable_entity
     end
   end
 
   def destroy
     session[:user_id] = nil
-      redirect_to sign_in_path, notice: "Signed out."
+      redirect_to sign_in_path, notice: "Sesión cerrada."
   end
 
   private

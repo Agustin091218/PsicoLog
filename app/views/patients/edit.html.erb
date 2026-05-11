@@ -1,11 +1,11 @@
 <%= render "shared/flash" %>
 
-<h1 class="text-2xl font-semibold mb-6">Edit <%= @patient.full_name %></h1>
+<h1 class="text-2xl font-semibold mb-6">Editar <%= @patient.full_name %></h1>
 
 <div class="bg-white rounded-lg border border-gray-200 p-6 max-w-lg">
   <%= render "form", patient: @patient %>
 </div>
 
 <div class="mt-4">
-  <%= link_to "Cancel", patient_path(@patient), class: "text-sm text-gray-500 hover:underline" %>
+  <%= link_to "Cancelar", patient_path(@patient), class: "text-sm text-gray-500 hover:underline" %>
 </div>

@@ -18,7 +18,7 @@ class NotesController < ApplicationController
     @note = @patient.notes.new(note_params)
 
     if @note.save
-      redirect_to patient_notes_path(@patient), notice: "Note created successfully."
+      redirect_to patient_notes_path(@patient), notice: "Nota creada."
     else
       render :new, status: :unprocessable_entity
     end
@@ -29,7 +29,7 @@ class NotesController < ApplicationController
 
   def update
     if @note.update(note_params)
-      redirect_to patient_note_path(@patient, @note), notice: "Note updated successfully."
+      redirect_to patient_note_path(@patient, @note), notice: "Nota actualizada."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -37,7 +37,7 @@ class NotesController < ApplicationController
 
   def destroy
     @note.soft_delete
-    redirect_to patient_notes_path(@patient), notice: "Note archived."
+    redirect_to patient_notes_path(@patient), notice: "Nota archivada."
   end
 
   private

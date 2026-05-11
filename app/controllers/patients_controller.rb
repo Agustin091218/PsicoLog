@@ -17,7 +17,7 @@ class PatientsController < ApplicationController
     @patient = current_user.patients.new(patient_params)
 
     if @patient.save
-      redirect_to @patient, notice: "Patient created successfully."
+      redirect_to @patient, notice: "Paciente creado."
     else
       render :new, status: :unprocessable_entity
     end
@@ -28,7 +28,7 @@ class PatientsController < ApplicationController
 
   def update
     if @patient.update(patient_params)
-      redirect_to @patient, notice: "Patient updated successfully."
+      redirect_to @patient, notice: "Paciente actualizado."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -36,7 +36,7 @@ class PatientsController < ApplicationController
 
   def destroy
     @patient.soft_delete
-    redirect_to patients_path, notice: "Patient archived."
+    redirect_to patients_path, notice: "Paciente archivado."
   end
 
   def summary

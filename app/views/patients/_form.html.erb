@@ -1,7 +1,7 @@
 <%= form_with model: patient, local: true, class: "space-y-4" do |f| %>
   <% if patient.errors.any? %>
     <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-700">
-      <p class="font-medium"><%= pluralize(patient.errors.count, "error") %> prevented saving:</p>
+      <p class="font-medium"><%= pluralize(patient.errors.count, "error") %> impidieron guardar:</p>
       <ul class="list-disc list-inside mt-1">
         <% patient.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>

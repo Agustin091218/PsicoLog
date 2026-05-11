@@ -1,0 +1,40 @@
+es:
+  activerecord:
+    models:
+      user: Usuario
+      patient: Paciente
+      note: Nota
+    attributes:
+      user:
+        first_name: Nombre
+        last_name: Apellido
+        email: Email
+        phone: Teléfono
+        password: Contraseña
+        password_confirmation: Confirmar contraseña
+      patient:
+        first_name: Nombre
+        last_name: Apellido
+      note:
+        note_type: Tipo de nota
+        content: Contenido
+        recorded_at: Fecha
+    errors:
+      messages:
+        record_invalid: "La validación falló: %{errors}"
+  note_types:
+    session_note: Nota de sesión
+    initial_interview: Entrevista inicial
+    follow_up: Seguimiento
+    emergency: Emergencia
+    discharge: Alta
+  helpers:
+    submit:
+      create: "Crear %{model}"
+      update: "Actualizar %{model}"
+      submit: "Guardar %{model}"
+  time:
+    formats:
+      default: "%-d de %B de %Y"
+      short: "%-d %b %Y"
+      long: "%-d de %B de %Y, %H:%M"

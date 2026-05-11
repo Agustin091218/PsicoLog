@@ -1,21 +1,21 @@
 <%= render "shared/flash" %>
 
 <div class="flex items-center justify-between mb-6">
-  <h1 class="text-2xl font-semibold">Session Summary</h1>
+  <h1 class="text-2xl font-semibold">Resumen de sesión</h1>
   <%= link_to new_patient_note_path(@patient), class: "inline-flex items-center px-4 py-2 bg-brand-600 text-white text-sm font-medium rounded-lg hover:bg-brand-700" do %>
-    New Note
+    Nueva nota
   <% end %>
 </div>
 
 <h2 class="text-xl font-medium text-gray-900 mb-2"><%= @patient.full_name %></h2>
 
 <p class="text-sm text-gray-500 mb-6">
-  <strong>Last session:</strong>
+  <strong>Última sesión:</strong>
   <% last_note = @patient.notes.active.ordered.first %>
-  <%= last_note ? last_note.recorded_at.strftime("%B %d, %Y") : "No sessions yet" %>
+  <%= last_note ? l(last_note.recorded_at, format: :long) : "Sin sesiones aún" %>
 </p>
 
-<h3 class="text-lg font-medium text-gray-900 mb-3">Recent Notes</h3>
+<h3 class="text-lg font-medium text-gray-900 mb-3">Notas recientes</h3>
 
 <% if @recent_notes.any? %>
   <div class="space-y-4">
@@ -23,27 +23,27 @@
       <div class="bg-white rounded-lg border border-gray-200 p-5">
         <div class="flex items-center justify-between mb-2">
           <span class="text-xs font-medium text-brand-600 bg-brand-50 px-2 py-1 rounded">
-            <%= note.note_type.humanize %>
+            <%= note.translated_type %>
           </span>
           <span class="text-xs text-gray-400">
-            <%= note.recorded_at.strftime("%b %d, %Y at %H:%M") %>
+            <%= l(note.recorded_at, format: :long) %>
           </span>
         </div>
         <div class="text-sm text-gray-700 leading-relaxed">
           <%= simple_format(truncate(note.content, length: 200)) %>
         </div>
-        <%= link_to "Read full note", patient_note_path(@patient, note),
+        <%= link_to "Leer nota completa", patient_note_path(@patient, note),
             class: "inline-block mt-2 text-sm text-brand-600 hover:underline" %>
       </div>
     <% end %>
   </div>
 <% else %>
   <div class="text-center py-12 bg-white rounded-lg border border-gray-200">
-    <p class="text-gray-500">No notes yet. Ready to start this session?</p>
+    <p class="text-gray-500">Aún no hay notas. ¿Listo para comenzar esta sesión?</p>
   </div>
 <% end %>
 
 <div class="mt-6 flex items-center gap-4">
-  <%= link_to "All notes", patient_notes_path(@patient), class: "text-sm text-gray-500 hover:underline" %>
-  <%= link_to "Back to patients", patients_path, class: "text-sm text-gray-500 hover:underline" %>
+  <%= link_to "Todas las notas", patient_notes_path(@patient), class: "text-sm text-gray-500 hover:underline" %>
+  <%= link_to "Volver a pacientes", patients_path, class: "text-sm text-gray-500 hover:underline" %>
 </div>
