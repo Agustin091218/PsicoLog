@@ -1,0 +1,9 @@
+<%= render "shared/flash" %>
+
+<%= link_to patient_note_path(@patient, @note), class: "text-sm text-gray-400 hover:text-gray-600 transition-colors mb-1 inline-block" do %>
+  &larr; Volver a la nota
+<% end %>
+
+<h1 class="text-3xl font-bold text-gray-900 tracking-tight mb-10">Editar nota</h1>
+
+<%= render "form", patient: @patient, note: @note %>

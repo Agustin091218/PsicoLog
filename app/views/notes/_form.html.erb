@@ -1,0 +1,44 @@
+<%= form_with model: [patient, note], local: true, class: "space-y-5" do |f| %>
+  <% if note.errors.any? %>
+    <div class="bg-red-50 border border-red-200/60 rounded-xl p-4 text-sm text-red-700">
+      <p class="font-medium flex items-center gap-1.5">
+        <svg class="w-4 h-4 text-red-500" viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+        <%= pluralize(note.errors.count, "error") %> impidieron guardar:
+      </p>
+      <ul class="list-disc list-inside mt-1 ml-5">
+        <% note.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="flex gap-4">
+    <div class="flex-1">
+      <%= f.label :note_type, class: "block text-sm font-medium text-gray-600 mb-1.5" %>
+      <%= f.select :note_type, Note.translated_types, {},
+          class: "w-full px-4 py-2.5 bg-white border-0 rounded-xl outline-none text-sm shadow-[0_2px_8px_rgba(0,0,0,0.04)] focus:shadow-[0_2px_12px_rgba(0,0,0,0.08)] transition-shadow" %>
+    </div>
+    <div class="flex-1">
+      <%= f.label :recorded_at, class: "block text-sm font-medium text-gray-600 mb-1.5" %>
+      <%= f.datetime_local_field :recorded_at,
+          class: "w-full px-4 py-2.5 bg-white border-0 rounded-xl outline-none text-sm shadow-[0_2px_8px_rgba(0,0,0,0.04)] focus:shadow-[0_2px_12px_rgba(0,0,0,0.08)] transition-shadow" %>
+    </div>
+  </div>
+
+  <div class="space-y-3" data-controller="note-editor">
+    <%= f.hidden_field :content, id: "note_content_input" %>
+    <trix-editor input="note_content_input" class="trix-editor-custom min-h-[280px]"></trix-editor>
+
+    <button type="button" data-action="note-editor#quickNote"
+        class="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 text-gray-400 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-colors">
+      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3C9.03 3 5.5 5.39 3.55 9h2.19c1.55-2.44 4.16-4 7.26-4 4.69 0 8.5 3.81 8.5 8.5s-3.81 8.5-8.5 8.5c-3.03 0-5.59-1.59-7.07-3.95H3.82C5.5 21.62 8.96 24 13 24c6.08 0 11-4.93 11-11S19.08 3 13 3zm-1 7v5l4.25 2.52.77-1.28-3.52-2.09V10H12z"/></svg>
+      Nota rápida
+    </button>
+  </div>
+
+  <div class="flex gap-3 pt-6">
+    <%= f.submit class: "px-6 py-2.5 bg-brand-600 text-white rounded-xl hover:bg-brand-700 cursor-pointer font-medium text-sm transition-colors" %>
+    <%= link_to "Cancelar", note.persisted? ? patient_note_path(patient, note) : patient_notes_path(patient), class: "px-6 py-2.5 text-sm text-gray-400 hover:text-gray-600 transition-colors" %>
+  </div>
+<% end %>

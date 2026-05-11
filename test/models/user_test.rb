@@ -6,7 +6,8 @@ class UserTest < ActiveSupport::TestCase
       first_name: "Juan",
       last_name: "Perez",
       email: "juan@example.com",
-      password_digest: "hashed"
+      password: "secret123",
+      password_confirmation: "secret123"
     }
   end
 
@@ -23,32 +24,32 @@ class UserTest < ActiveSupport::TestCase
   test "requires first_name" do
     user = User.new(valid_attributes.except(:first_name))
     assert_not user.valid?
-    assert_includes user.errors[:first_name], "can't be blank"
+    assert_includes user.errors[:first_name], "no puede estar en blanco"
   end
 
   test "requires last_name" do
     user = User.new(valid_attributes.except(:last_name))
     assert_not user.valid?
-    assert_includes user.errors[:last_name], "can't be blank"
+    assert_includes user.errors[:last_name], "no puede estar en blanco"
   end
 
   test "requires email" do
     user = User.new(valid_attributes.except(:email))
     assert_not user.valid?
-    assert_includes user.errors[:email], "can't be blank"
+    assert_includes user.errors[:email], "no puede estar en blanco"
   end
 
-  test "requires password_digest" do
-    user = User.new(valid_attributes.except(:password_digest))
+  test "requires password" do
+    user = User.new(valid_attributes.except(:password, :password_confirmation))
     assert_not user.valid?
-    assert_includes user.errors[:password_digest], "can't be blank"
+    assert_includes user.errors[:password], "no puede estar en blanco"
   end
 
   test "email must be unique" do
     User.create!(valid_attributes)
     duplicate = User.new(valid_attributes.merge(first_name: "Otro"))
     assert_not duplicate.valid?
-    assert_includes duplicate.errors[:email], "has already been taken"
+    assert_includes duplicate.errors[:email], "ya está en uso"
   end
 
   test "email uniqueness is case insensitive" do
@@ -69,11 +70,11 @@ class UserTest < ActiveSupport::TestCase
     assert_not_nil user.deleted_at
   end
 
-  test "default scope hides soft deleted users" do
+  test "active scope hides soft deleted users" do
     user = User.create!(valid_attributes)
     user.soft_delete
-    assert_nil User.find_by(id: user.id)
-    assert_not_nil User.unscoped.find_by(id: user.id)
+    assert_nil User.active.find_by(id: user.id)
+    assert_not_nil User.deleted.find_by(id: user.id)
   end
 
   test "restore clears deleted_at" do
@@ -84,10 +85,10 @@ class UserTest < ActiveSupport::TestCase
     assert_nil user.deleted_at
   end
 
-  test "restored user appears in default scope again" do
+  test "restored user appears in active scope again" do
     user = User.create!(valid_attributes)
     user.soft_delete
     user.restore
-    assert_not_nil User.find_by(id: user.id)
+    assert_not_nil User.active.find_by(id: user.id)
   end
 end

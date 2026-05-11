@@ -1,0 +1,9 @@
+<%= render "shared/flash" %>
+
+<%= link_to patient_path(@patient), class: "text-sm text-gray-400 hover:text-gray-600 transition-colors mb-1 inline-block" do %>
+  &larr; <%= @patient.full_name %>
+<% end %>
+
+<h1 class="text-3xl font-bold text-gray-900 tracking-tight mb-10">Editar paciente</h1>
+
+<%= render "form", patient: @patient %>

@@ -10,10 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_04_23_160424) do
+ActiveRecord::Schema[7.2].define(version: 2026_05_11_000002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "patient_id", null: false
+    t.string "note_type", null: false
+    t.text "content", null: false
+    t.datetime "recorded_at", null: false
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_notes_on_deleted_at"
+    t.index ["note_type"], name: "index_notes_on_note_type"
+    t.index ["patient_id"], name: "index_notes_on_patient_id"
+    t.index ["recorded_at"], name: "index_notes_on_recorded_at"
+  end
+
+  create_table "patients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email"
+    t.string "phone"
+    t.index ["deleted_at"], name: "index_patients_on_deleted_at"
+    t.index ["user_id"], name: "index_patients_on_user_id"
+  end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "first_name", null: false
@@ -27,4 +54,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_23_160424) do
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
+
+  add_foreign_key "notes", "patients"
+  add_foreign_key "patients", "users"
 end

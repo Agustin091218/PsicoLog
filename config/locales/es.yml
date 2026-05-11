@@ -1,0 +1,106 @@
+es:
+  activerecord:
+    models:
+      user: Usuario
+      patient: Paciente
+      note: Nota
+    attributes:
+      user:
+        first_name: Nombre
+        last_name: Apellido
+        email: Email
+        phone: Teléfono
+        password: Contraseña
+        password_confirmation: Confirmar contraseña
+      patient:
+        first_name: Nombre
+        last_name: Apellido
+      note:
+        note_type: Tipo de nota
+        content: Contenido
+        recorded_at: Fecha
+    errors:
+      messages:
+        record_invalid: "La validación falló: %{errors}"
+        blank: "no puede estar en blanco"
+        taken: "ya está en uso"
+        invalid: "no es válido"
+        too_short: "es demasiado corto"
+        too_long: "es demasiado largo"
+  errors:
+    messages:
+      blank: "no puede estar en blanco"
+      taken: "ya está en uso"
+      invalid: "no es válido"
+      too_short: "es demasiado corto"
+      too_long: "es demasiado largo"
+      format: "no es válido"
+  note_types:
+    session_note: Nota de sesión
+    initial_interview: Entrevista inicial
+    follow_up: Seguimiento
+    emergency: Emergencia
+    discharge: Alta
+    general_note: Nota general
+    quick_note: Nota rápida
+  helpers:
+    submit:
+      create: "Crear %{model}"
+      update: "Actualizar %{model}"
+      submit: "Guardar %{model}"
+  date:
+    abbr_day_names:
+      - dom
+      - lun
+      - mar
+      - mié
+      - jue
+      - vie
+      - sáb
+    abbr_month_names:
+      - ~
+      - ene
+      - feb
+      - mar
+      - abr
+      - may
+      - jun
+      - jul
+      - ago
+      - sep
+      - oct
+      - nov
+      - dic
+    day_names:
+      - domingo
+      - lunes
+      - martes
+      - miércoles
+      - jueves
+      - viernes
+      - sábado
+    month_names:
+      - ~
+      - enero
+      - febrero
+      - marzo
+      - abril
+      - mayo
+      - junio
+      - julio
+      - agosto
+      - septiembre
+      - octubre
+      - noviembre
+      - diciembre
+    order:
+      - :day
+      - :month
+      - :year
+  time:
+    am: am
+    pm: pm
+    formats:
+      default: "%-d de %B de %Y"
+      short: "%-d %b %Y"
+      long: "%-d de %B de %Y, %H:%M"
