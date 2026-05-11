@@ -28,28 +28,7 @@
 
   <div class="space-y-3" data-controller="note-editor">
     <%= f.hidden_field :content, id: "note_content_input" %>
-    <trix-editor input="note_content_input" class="trix-editor-custom min-h-[280px]">
-      <trix-toolbar id="trix-toolbar-1">
-        <div class="trix-button-row">
-          <span class="trix-button-group trix-button-group--text-tools">
-            <button type="button" class="trix-button trix-button--icon trix-button--icon-bold" data-trix-attribute="bold" title="Negrita" tabindex="-1">Negrita</button>
-            <button type="button" class="trix-button trix-button--icon trix-button--icon-italic" data-trix-attribute="italic" title="Cursiva" tabindex="-1">Cursiva</button>
-          </span>
-          <span class="trix-button-group trix-button-group--block-tools">
-            <button type="button" class="trix-button trix-button--icon trix-button--icon-bullet-list" data-trix-attribute="bullet" title="Lista" tabindex="-1">Lista</button>
-            <button type="button" class="trix-button trix-button--icon trix-button--icon-number-list" data-trix-attribute="number" title="Numeración" tabindex="-1">Numeración</button>
-          </span>
-          <span class="trix-button-group trix-button-group--link-tools">
-            <button type="button" class="trix-button trix-button--icon trix-button--icon-link" data-trix-attribute="href" title="Enlace" tabindex="-1">Enlace</button>
-          </span>
-          <span class="trix-button-group-spacer"></span>
-          <span class="trix-button-group trix-button-group--history-tools">
-            <button type="button" class="trix-button trix-button--icon trix-button--icon-undo" data-trix-action="undo" title="Deshacer" tabindex="-1">Deshacer</button>
-            <button type="button" class="trix-button trix-button--icon trix-button--icon-redo" data-trix-action="redo" title="Rehacer" tabindex="-1">Rehacer</button>
-          </span>
-        </div>
-      </trix-toolbar>
-    </trix-editor>
+    <trix-editor input="note_content_input" class="trix-editor-custom min-h-[280px]"></trix-editor>
 
     <button type="button" data-action="note-editor#quickNote"
         class="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 text-gray-400 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-colors">

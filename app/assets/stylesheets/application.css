@@ -16,9 +16,23 @@
 
 /* ── Trix Editor Custom Styles ── */
 
+/* Hide unused toolbar buttons */
+.trix-editor-custom [data-trix-attribute="strike"],
+.trix-editor-custom [data-trix-attribute="heading1"],
+.trix-editor-custom [data-trix-attribute="quote"],
+.trix-editor-custom [data-trix-attribute="code"],
+.trix-editor-custom [data-trix-action="attachFiles"],
+.trix-editor-custom [data-trix-action="decreaseNestingLevel"],
+.trix-editor-custom [data-trix-action="increaseNestingLevel"] {
+  display: none !important;
+}
+
 .trix-editor-custom {
   border: none !important;
   outline: none !important;
+  border-radius: 0.75rem !important;
+  overflow: hidden !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04) !important;
 }
 
 .trix-editor-custom trix-toolbar {
@@ -44,7 +58,7 @@
 }
 
 .trix-editor-custom .trix-button-group-spacer {
-  flex: 1 !important;
+  flex-grow: 1 !important;
 }
 
 .trix-editor-custom .trix-button {
@@ -72,17 +86,14 @@
 
 .trix-editor-custom .trix-button--icon::before {
   opacity: 0.6 !important;
-  filter: grayscale(0.3) !important;
 }
 
 .trix-editor-custom .trix-button:hover::before {
   opacity: 0.85 !important;
-  filter: none !important;
 }
 
 .trix-editor-custom .trix-button.trix-active::before {
   opacity: 1 !important;
-  filter: none !important;
 }
 
 .trix-editor-custom .trix-button-group--history-tools .trix-button {
@@ -94,7 +105,7 @@
 }
 
 .trix-editor-custom trix-toolbar .trix-dialogs {
-  display: none !important;
+  position: absolute !important;
 }
 
 .trix-editor-custom trix-editor {
@@ -109,10 +120,4 @@
 
 .trix-editor-custom trix-editor:focus {
   outline: none !important;
-}
-
-.trix-editor-custom trix-editor [data-trix-placeholder]::before {
-  content: attr(data-trix-placeholder);
-  color: #d1d5db !important;
-  font-style: italic !important;
 }
