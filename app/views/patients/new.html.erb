@@ -1,0 +1,11 @@
+<%= render "shared/flash" %>
+
+<h1 class="text-2xl font-semibold mb-6">New Patient</h1>
+
+<div class="bg-white rounded-lg border border-gray-200 p-6 max-w-lg">
+  <%= render "form", patient: @patient %>
+</div>
+
+<div class="mt-4">
+  <%= link_to "Back", patients_path, class: "text-sm text-gray-500 hover:underline" %>
+</div>

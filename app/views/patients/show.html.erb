@@ -1,0 +1,24 @@
+<%= render "shared/flash" %>
+
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-2xl font-semibold"><%= @patient.full_name %></h1>
+  <div class="flex items-center gap-3">
+    <%= link_to "Summary", summary_patient_path(@patient),
+        class: "text-sm text-brand-600 hover:underline" %>
+    <%= link_to "Notes", patient_notes_path(@patient),
+        class: "text-sm text-gray-500 hover:text-gray-700" %>
+    <%= link_to "Edit", edit_patient_path(@patient),
+        class: "text-sm text-gray-500 hover:text-gray-700" %>
+    <%= button_to "Archive", patient_path(@patient), method: :delete,
+        class: "text-sm text-red-500 hover:text-red-700",
+        form: { data: { turbo_confirm: "Archive this patient?" } } %>
+  </div>
+</div>
+
+<div class="bg-white rounded-lg border border-gray-200 p-6 text-sm text-gray-600">
+  <p><strong class="text-gray-900">Added:</strong> <%= @patient.created_at.strftime("%B %d, %Y") %></p>
+</div>
+
+<div class="mt-4">
+  <%= link_to "Back to patients", patients_path, class: "text-sm text-gray-500 hover:underline" %>
+</div>

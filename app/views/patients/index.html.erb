@@ -1,0 +1,60 @@
+<%= render "shared/flash" %>
+
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-2xl font-semibold">Patients</h1>
+  <%= link_to "New Patient", new_patient_path,
+      class: "inline-flex items-center px-4 py-2 bg-brand-600 text-white text-sm font-medium rounded-lg hover:bg-brand-700" %>
+</div>
+
+<%= search_form_for @q, url: patients_path, method: :get, class: "flex gap-3 mb-6" do |f| %>
+  <%= f.search_field :first_name_or_last_name_cont, placeholder: "Search by name...",
+      class: "flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm" %>
+  <%= f.submit "Search", class: "px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer" %>
+  <%= link_to "Clear", patients_path, class: "px-4 py-2 text-sm text-gray-500 hover:text-gray-700 flex items-center" %>
+<% end %>
+
+<% if @patients.any? %>
+  <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+    <table class="w-full">
+      <thead class="bg-gray-50 border-b border-gray-200">
+        <tr>
+          <th class="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <%= sort_link(@q, :first_name, "Name") %>
+          </th>
+          <th class="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <%= sort_link(@q, :created_at, "Added") %>
+          </th>
+          <th class="px-4 py-3"></th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100">
+        <% @patients.each do |patient| %>
+          <tr class="hover:bg-gray-50">
+            <td class="px-4 py-3">
+              <%= link_to patient.full_name, patient, class: "text-sm font-medium text-brand-600 hover:underline" %>
+            </td>
+            <td class="px-4 py-3 text-sm text-gray-500">
+              <%= time_ago_in_words(patient.created_at) %> ago
+            </td>
+            <td class="px-4 py-3 flex items-center gap-2 justify-end">
+              <%= link_to "Notes", patient_notes_path(patient),
+                  class: "text-sm text-gray-500 hover:text-gray-700" %>
+              <%= link_to "Summary", summary_patient_path(patient),
+                  class: "text-sm text-brand-600 hover:underline" %>
+              <%= link_to "Edit", edit_patient_path(patient),
+                  class: "text-sm text-gray-500 hover:text-gray-700" %>
+              <%= button_to "Archive", patient_path(patient), method: :delete,
+                  class: "text-sm text-red-500 hover:text-red-700",
+                  form: { data: { turbo_confirm: "Archive this patient?" } } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="text-center py-12 bg-white rounded-lg border border-gray-200">
+    <p class="text-gray-500">No patients yet.</p>
+    <%= link_to "Add your first patient", new_patient_path, class: "mt-2 inline-block text-brand-600 hover:underline text-sm" %>
+  </div>
+<% end %>
