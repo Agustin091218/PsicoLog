@@ -1,24 +1,42 @@
 <%= render "shared/flash" %>
 
 <div class="flex items-center justify-between mb-6">
-  <h1 class="text-2xl font-semibold"><%= @patient.full_name %></h1>
-  <div class="flex items-center gap-3">
-    <%= link_to "Resumen", summary_patient_path(@patient),
-        class: "text-sm text-brand-600 hover:underline" %>
-    <%= link_to "Notas", patient_notes_path(@patient),
-        class: "text-sm text-gray-500 hover:text-gray-700" %>
-    <%= link_to "Editar", edit_patient_path(@patient),
-        class: "text-sm text-gray-500 hover:text-gray-700" %>
-    <%= button_to "Archivar", patient_path(@patient), method: :delete,
-        class: "text-sm text-red-500 hover:text-red-700",
-        form: { data: { turbo_confirm: "¿Archivar este paciente?" } } %>
+  <div>
+    <h1 class="text-2xl font-semibold text-gray-900"><%= @patient.full_name %></h1>
+    <p class="text-sm text-gray-400 mt-0.5">Agregado <%= l(@patient.created_at, format: :short) %></p>
+  </div>
+  <div class="flex items-center gap-2">
+    <%= link_to summary_patient_path(@patient), class: "inline-flex items-center gap-1.5 px-3 py-2 text-sm text-brand-600 hover:bg-brand-50 rounded-xl transition-colors" do %>
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/></svg>
+      Resumen
+    <% end %>
+    <%= link_to patient_notes_path(@patient), class: "inline-flex items-center gap-1.5 px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-xl transition-colors" do %>
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+      Notas
+    <% end %>
+    <%= link_to edit_patient_path(@patient), class: "inline-flex items-center gap-1.5 px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-xl transition-colors" do %>
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+      Editar
+    <% end %>
+    <%= button_to patient_path(@patient), method: :delete,
+        class: "inline-flex items-center gap-1.5 px-3 py-2 text-sm text-red-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-colors",
+        form: { data: { turbo_confirm: "¿Archivar este paciente?" } } do %>
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+      Archivar
+    <% end %>
   </div>
 </div>
 
-<div class="bg-white rounded-lg border border-gray-200 p-6 text-sm text-gray-600">
-  <p><strong class="text-gray-900">Agregado:</strong> <%= l(@patient.created_at, format: :long) %></p>
+<div class="bg-white rounded-2xl border border-gray-100 p-6 text-sm text-gray-600 shadow-sm">
+  <p class="flex items-center gap-2">
+    <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+    <strong class="text-gray-700">Agregado:</strong> <%= l(@patient.created_at, format: :long) %>
+  </p>
 </div>
 
-<div class="mt-4">
-  <%= link_to "Volver a pacientes", patients_path, class: "text-sm text-gray-500 hover:underline" %>
+<div class="mt-6">
+  <%= link_to patients_path, class: "inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-600 transition-colors" do %>
+    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    Volver a pacientes
+  <% end %>
 </div>

@@ -25,23 +25,39 @@
   </div>
 
   <div data-controller="note-editor">
-    <div class="flex items-center gap-1 mb-2 pb-2 border-b border-gray-200">
-      <button type="button" data-action="note-editor#bold"
-          class="px-2 py-1 text-xs font-bold text-gray-600 hover:bg-gray-100 rounded">N</button>
-      <button type="button" data-action="note-editor#italic"
-          class="px-2 py-1 text-xs italic text-gray-600 hover:bg-gray-100 rounded">C</button>
-      <button type="button" data-action="note-editor#list"
-          class="px-2 py-1 text-xs text-gray-600 hover:bg-gray-100 rounded">Lista</button>
-      <span class="mx-2 text-gray-200">|</span>
-      <button type="button" data-action="note-editor#quickNote"
-          class="px-2 py-1 text-xs text-gray-600 hover:bg-gray-100 rounded">Nota rápida</button>
+    <div class="flex items-center gap-1 mb-3 pb-2 border-b border-gray-200">
+      <button type="button" data-action="note-editor#bold" title="Negrita"
+          class="p-1.5 text-gray-500 hover:bg-gray-100 rounded-md transition-colors">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M15.6 10.79c.97-.67 1.65-1.77 1.65-2.79 0-2.26-1.75-4-4-4H7v14h7.04c2.09 0 3.71-1.7 3.71-3.79 0-1.52-.86-2.82-2.15-3.42zM10 6.5h3c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-3v-3zm3.5 9H10v-3h3.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5z"/></svg>
+      </button>
+      <button type="button" data-action="note-editor#italic" title="Cursiva"
+          class="p-1.5 text-gray-500 hover:bg-gray-100 rounded-md transition-colors">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M10 4v3h2.21l-3.42 8H6v3h8v-3h-2.21l3.42-8H18V4h-8z"/></svg>
+      </button>
+      <button type="button" data-action="note-editor#list" title="Lista"
+          class="p-1.5 text-gray-500 hover:bg-gray-100 rounded-md transition-colors">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+      </button>
+      <span class="w-px h-5 bg-gray-200 mx-2"></span>
+      <button type="button" data-action="note-editor#quickNote" title="Nota rápida"
+          class="p-1.5 text-gray-500 hover:bg-gray-100 rounded-md transition-colors">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3l3.293 3.293-7 7 2.414 2.414 7-7L22 11V3H13zm-4.707 10.293l-5.586 5.586 2.414 2.414 5.586-5.586-2.414-2.414z"/></svg>
+      </button>
     </div>
 
-    <div>
-      <%= f.label :content, class: "block text-sm font-medium text-gray-700 mb-1" %>
-      <%= f.text_area :content, rows: 14, required: true,
-          data: { note_editor_target: "textarea" },
-          class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm font-mono" %>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <%= f.label :content, class: "block text-sm font-medium text-gray-700 mb-1" %>
+        <%= f.text_area :content, rows: 16, required: true,
+            data: { note_editor_target: "textarea", action: "input->note-editor#updatePreview" },
+            class: "w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm font-mono leading-relaxed resize-y" %>
+      </div>
+      <div>
+        <span class="block text-sm font-medium text-gray-700 mb-1">Vista previa</span>
+        <div data-note-editor-target="preview"
+             class="w-full h-full min-h-[320px] px-4 py-3 border border-gray-200 rounded-xl bg-gray-50/50 text-sm text-gray-700 leading-relaxed overflow-y-auto prose prose-sm max-w-none">
+        </div>
+      </div>
     </div>
   </div>
 

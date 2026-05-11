@@ -1,7 +1,7 @@
 class Note < ApplicationRecord
   include SoftDeletable
 
-  NOTE_TYPES = %w[session_note general_note quick_note].freeze
+  NOTE_TYPES = %w[session_note initial_interview follow_up emergency discharge general_note quick_note].freeze
 
   belongs_to :patient
 

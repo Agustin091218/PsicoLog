@@ -28,6 +28,8 @@ es:
     follow_up: Seguimiento
     emergency: Emergencia
     discharge: Alta
+    general_note: Nota general
+    quick_note: Nota rápida
   helpers:
     submit:
       create: "Crear %{model}"
