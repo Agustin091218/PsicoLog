@@ -28,34 +28,37 @@ puts "  ✓ #{andres.full_name} (#{andres.email})"
 puts ""
 puts "=== Creando pacientes ==="
 
-def create_patient(user, first_name, last_name)
-  Patient.find_or_create_by!(user: user, first_name: first_name, last_name: last_name)
+def create_patient(user, first_name, last_name, email, phone)
+  Patient.find_or_create_by!(user: user, first_name: first_name, last_name: last_name) do |p|
+    p.email = email
+    p.phone = phone
+  end
 end
 
 # Pacientes de Axel
 axel_patients = [
-  create_patient(axel, "Martín", "González"),
-  create_patient(axel, "Camila", "Rodríguez"),
-  create_patient(axel, "Luciana", "Sosa"),
-  create_patient(axel, "Federico", "Pérez"),
-  create_patient(axel, "Valentina", "Díaz")
+  create_patient(axel, "Martín", "González", "martin.gonzalez@email.com", "2615551001"),
+  create_patient(axel, "Camila", "Rodríguez", "camila.rodriguez@email.com", "2615551002"),
+  create_patient(axel, "Luciana", "Sosa", "luciana.sosa@email.com", "2615551003"),
+  create_patient(axel, "Federico", "Pérez", "federico.perez@email.com", "2615551004"),
+  create_patient(axel, "Valentina", "Díaz", "valentina.diaz@email.com", "2615551005")
 ]
 puts "  ✓ #{axel.full_name}: #{axel_patients.size} pacientes"
 
 # Pacientes de Julián
 julian_patients = [
-  create_patient(julian, "Santiago", "López"),
-  create_patient(julian, "Florencia", "Martínez"),
-  create_patient(julian, "Joaquín", "Romero"),
-  create_patient(julian, "Agustina", "Torres")
+  create_patient(julian, "Santiago", "López", "santiago.lopez@email.com", "2615552001"),
+  create_patient(julian, "Florencia", "Martínez", "florencia.martinez@email.com", "2615552002"),
+  create_patient(julian, "Joaquín", "Romero", "joaquin.romero@email.com", "2615552003"),
+  create_patient(julian, "Agustina", "Torres", "agustina.torres@email.com", "2615552004")
 ]
 puts "  ✓ #{julian.full_name}: #{julian_patients.size} pacientes"
 
 # Pacientes de Andrés
 andres_patients = [
-  create_patient(andres, "Bautista", "Álvarez"),
-  create_patient(andres, "Catalina", "Benítez"),
-  create_patient(andres, "Mateo", "Ferreyra")
+  create_patient(andres, "Bautista", "Álvarez", "bautista.alvarez@email.com", "2615553001"),
+  create_patient(andres, "Catalina", "Benítez", "catalina.benitez@email.com", "2615553002"),
+  create_patient(andres, "Mateo", "Ferreyra", "mateo.ferreyra@email.com", "2615553003")
 ]
 puts "  ✓ #{andres.full_name}: #{andres_patients.size} pacientes"
 

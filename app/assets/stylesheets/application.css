@@ -14,9 +14,6 @@
  *= require_self
  */
 
-/* ── Trix Editor Custom Styles ── */
-
-/* Hide unused toolbar buttons */
 .trix-editor-custom [data-trix-attribute="strike"],
 .trix-editor-custom [data-trix-attribute="heading1"],
 .trix-editor-custom [data-trix-attribute="quote"],
