@@ -17,5 +17,6 @@ Rails.application.routes.draw do
     resources :notes
     get "summary", on: :member
   end
+  get "notes", to: "notes#all", as: :notes
   root "patients#index"
 end
