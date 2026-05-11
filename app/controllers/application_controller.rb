@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
+  before_action :authenticate_user!
+
   private
 
   def current_user
