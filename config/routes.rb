@@ -18,5 +18,6 @@ Rails.application.routes.draw do
     get "summary", on: :member
   end
   get "notes", to: "notes#all", as: :notes
+  post "quick_note", to: "notes#quick_create"
   root "patients#index"
 end
