@@ -1,4 +1,6 @@
 import { application } from "./application"
-import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
+import QuickNoteController from "./quick_note_controller"
+import NoteEditorController from "./note_editor_controller"
 
-eagerLoadControllersFrom("controllers", application)
+application.register("quick-note", QuickNoteController)
+application.register("note-editor", NoteEditorController)
