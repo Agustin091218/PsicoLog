@@ -25,7 +25,7 @@ class Note < ApplicationRecord
   end
 
   def self.translated_types
-    NOTE_TYPES.map { |t| [I18n.t("note_types.#{t}"), t] }
+    NOTE_TYPES.map { |t| [ I18n.t("note_types.#{t}"), t ] }
   end
 
   def translated_type

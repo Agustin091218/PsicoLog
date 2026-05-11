@@ -1,3 +1,4 @@
+unless Rails.env.test?
 puts "=== Creando usuarios profesionales ==="
 
 axel = User.find_or_create_by!(email: "axel@psicolog.com") do |u|
@@ -319,3 +320,4 @@ puts "  Usuarios:  Axel (axel@psicolog.com), Julián (julian@psicolog.com), Andr
 puts "  Contraseña: password123 (para todos)"
 puts "  Total pacientes: #{Patient.count}"
 puts "  Total notas: #{Note.count}"
+end

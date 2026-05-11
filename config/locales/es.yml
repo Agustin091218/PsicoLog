@@ -22,6 +22,19 @@ es:
     errors:
       messages:
         record_invalid: "La validación falló: %{errors}"
+        blank: "no puede estar en blanco"
+        taken: "ya está en uso"
+        invalid: "no es válido"
+        too_short: "es demasiado corto"
+        too_long: "es demasiado largo"
+  errors:
+    messages:
+      blank: "no puede estar en blanco"
+      taken: "ya está en uso"
+      invalid: "no es válido"
+      too_short: "es demasiado corto"
+      too_long: "es demasiado largo"
+      format: "no es válido"
   note_types:
     session_note: Nota de sesión
     initial_interview: Entrevista inicial
