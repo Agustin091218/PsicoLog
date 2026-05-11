@@ -1,8 +1,11 @@
-<%= form_with model: [patient, note], local: true, class: "space-y-4" do |f| %>
+<%= form_with model: [patient, note], local: true, class: "space-y-5" do |f| %>
   <% if note.errors.any? %>
-    <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-700">
-      <p class="font-medium"><%= pluralize(note.errors.count, "error") %> impidieron guardar:</p>
-      <ul class="list-disc list-inside mt-1">
+    <div class="bg-red-50 border border-red-200/60 rounded-xl p-4 text-sm text-red-700">
+      <p class="font-medium flex items-center gap-1.5">
+        <svg class="w-4 h-4 text-red-500" viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+        <%= pluralize(note.errors.count, "error") %> impidieron guardar:
+      </p>
+      <ul class="list-disc list-inside mt-1 ml-5">
         <% note.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
         <% end %>
@@ -10,56 +13,57 @@
     </div>
   <% end %>
 
-  <div class="grid grid-cols-2 gap-4">
-    <div>
-      <%= f.label :note_type, class: "block text-sm font-medium text-gray-700 mb-1" %>
+  <div class="flex gap-4">
+    <div class="flex-1">
+      <%= f.label :note_type, class: "block text-sm font-medium text-gray-600 mb-1.5" %>
       <%= f.select :note_type, Note.translated_types, {},
-          class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm" %>
+          class: "w-full px-4 py-2.5 bg-white border-0 rounded-xl outline-none text-sm shadow-[0_2px_8px_rgba(0,0,0,0.04)] focus:shadow-[0_2px_12px_rgba(0,0,0,0.08)] transition-shadow" %>
     </div>
-
-    <div>
-      <%= f.label :recorded_at, class: "block text-sm font-medium text-gray-700 mb-1" %>
+    <div class="flex-1">
+      <%= f.label :recorded_at, class: "block text-sm font-medium text-gray-600 mb-1.5" %>
       <%= f.datetime_local_field :recorded_at,
-          class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm" %>
+          class: "w-full px-4 py-2.5 bg-white border-0 rounded-xl outline-none text-sm shadow-[0_2px_8px_rgba(0,0,0,0.04)] focus:shadow-[0_2px_12px_rgba(0,0,0,0.08)] transition-shadow" %>
     </div>
   </div>
 
   <div data-controller="note-editor">
-    <div class="flex items-center gap-1 mb-3 pb-2 border-b border-gray-200">
+    <div class="flex items-center gap-0.5 mb-3">
       <button type="button" data-action="note-editor#bold" title="Negrita"
-          class="p-1.5 text-gray-500 hover:bg-gray-100 rounded-md transition-colors">
+          class="p-2 text-gray-400 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors">
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M15.6 10.79c.97-.67 1.65-1.77 1.65-2.79 0-2.26-1.75-4-4-4H7v14h7.04c2.09 0 3.71-1.7 3.71-3.79 0-1.52-.86-2.82-2.15-3.42zM10 6.5h3c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-3v-3zm3.5 9H10v-3h3.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5z"/></svg>
       </button>
       <button type="button" data-action="note-editor#italic" title="Cursiva"
-          class="p-1.5 text-gray-500 hover:bg-gray-100 rounded-md transition-colors">
+          class="p-2 text-gray-400 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors">
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M10 4v3h2.21l-3.42 8H6v3h8v-3h-2.21l3.42-8H18V4h-8z"/></svg>
       </button>
       <button type="button" data-action="note-editor#list" title="Lista"
-          class="p-1.5 text-gray-500 hover:bg-gray-100 rounded-md transition-colors">
+          class="p-2 text-gray-400 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors">
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
       </button>
       <span class="w-px h-5 bg-gray-200 mx-2"></span>
       <button type="button" data-action="note-editor#quickNote" title="Nota rápida"
-          class="p-1.5 text-gray-500 hover:bg-gray-100 rounded-md transition-colors">
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3l3.293 3.293-7 7 2.414 2.414 7-7L22 11V3H13zm-4.707 10.293l-5.586 5.586 2.414 2.414 5.586-5.586-2.414-2.414z"/></svg>
+          class="p-2 text-gray-400 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3C9.03 3 5.5 5.39 3.55 9h2.19c1.55-2.44 4.16-4 7.26-4 4.69 0 8.5 3.81 8.5 8.5s-3.81 8.5-8.5 8.5c-3.03 0-5.59-1.59-7.07-3.95H3.82C5.5 21.62 8.96 24 13 24c6.08 0 11-4.93 11-11S19.08 3 13 3zm-1 7v5l4.25 2.52.77-1.28-3.52-2.09V10H12z"/></svg>
       </button>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div>
-        <%= f.label :content, class: "block text-sm font-medium text-gray-700 mb-1" %>
-        <%= f.text_area :content, rows: 16, required: true,
-            data: { note_editor_target: "textarea", action: "input->note-editor#updatePreview" },
-            class: "w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm font-mono leading-relaxed resize-y" %>
-      </div>
-      <div>
-        <span class="block text-sm font-medium text-gray-700 mb-1">Vista previa</span>
-        <div data-note-editor-target="preview"
-             class="w-full h-full min-h-[320px] px-4 py-3 border border-gray-200 rounded-xl bg-gray-50/50 text-sm text-gray-700 leading-relaxed overflow-y-auto prose prose-sm max-w-none">
-        </div>
+    <div class="flex gap-4" style="min-height: 330px;">
+      <%= f.text_area :content, required: true,
+          data: { note_editor_target: "textarea", action: "keyup->note-editor#updatePreview" },
+          placeholder: "Escribí tu nota acá...\n\nUsá **negrita**, _cursiva_ y - listas",
+          class: "flex-1 p-5 bg-white border-0 rounded-2xl outline-none text-sm leading-relaxed resize-none shadow-[0_2px_8px_rgba(0,0,0,0.04)] focus:shadow-[0_2px_12px_rgba(0,0,0,0.08)] transition-shadow",
+          style: "min-height: 330px; max-height: 400px;" %>
+      
+      <div data-note-editor-target="preview"
+           class="flex-1 p-5 bg-[#faf9f7] rounded-2xl text-sm text-gray-600 leading-relaxed overflow-y-auto prose-a:text-brand-600"
+           style="min-height: 330px; max-height: 400px;">
+        <p class="text-gray-300 italic text-xs">La vista previa aparece acá...</p>
       </div>
     </div>
   </div>
 
-  <%= f.submit class: "w-full py-2 px-4 bg-brand-600 text-white rounded-lg hover:bg-brand-700 cursor-pointer font-medium" %>
+  <div class="flex gap-3 pt-6">
+    <%= f.submit class: "px-6 py-2.5 bg-brand-600 text-white rounded-xl hover:bg-brand-700 cursor-pointer font-medium text-sm transition-colors" %>
+    <%= link_to "Cancelar", note.persisted? ? patient_note_path(patient, note) : patient_notes_path(patient), class: "px-6 py-2.5 text-sm text-gray-400 hover:text-gray-600 transition-colors" %>
+  </div>
 <% end %>

@@ -1,6 +1,6 @@
-<%= form_with model: patient, local: true, class: "space-y-5" do |f| %>
+<%= form_with model: patient, local: true, class: "space-y-6 max-w-lg" do |f| %>
   <% if patient.errors.any? %>
-    <div class="bg-red-50/80 backdrop-blur-sm border border-red-200/60 rounded-xl p-4 text-sm text-red-700">
+    <div class="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700">
       <p class="font-medium flex items-center gap-1.5">
         <svg class="w-4 h-4 text-red-500" viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
         <%= pluralize(patient.errors.count, "error") %> impidieron guardar:
@@ -14,16 +14,19 @@
   <% end %>
 
   <div>
-    <%= f.label :first_name, class: "block text-sm font-medium text-gray-600 mb-1.5" %>
+    <%= f.label :first_name, "Nombre", class: "block text-sm font-medium text-gray-500 mb-2" %>
     <%= f.text_field :first_name, required: true, autofocus: true,
-        class: "w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none text-sm bg-white shadow-sm transition-shadow" %>
+        class: "w-full px-0 py-2.5 border-0 border-b border-gray-200 focus:ring-0 focus:border-brand-500 outline-none text-sm bg-transparent placeholder:text-gray-300 transition-colors" %>
   </div>
 
   <div>
-    <%= f.label :last_name, class: "block text-sm font-medium text-gray-600 mb-1.5" %>
+    <%= f.label :last_name, "Apellido", class: "block text-sm font-medium text-gray-500 mb-2" %>
     <%= f.text_field :last_name, required: true,
-        class: "w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none text-sm bg-white shadow-sm transition-shadow" %>
+        class: "w-full px-0 py-2.5 border-0 border-b border-gray-200 focus:ring-0 focus:border-brand-500 outline-none text-sm bg-transparent placeholder:text-gray-300 transition-colors" %>
   </div>
 
-  <%= f.submit class: "w-full py-2.5 px-4 bg-brand-600 text-white rounded-xl hover:bg-brand-700 cursor-pointer font-medium text-sm transition-colors shadow-sm" %>
+  <div class="flex gap-3 pt-6">
+    <%= f.submit class: "px-6 py-2.5 bg-brand-600 text-white rounded-xl hover:bg-brand-700 cursor-pointer font-medium text-sm transition-colors" %>
+    <%= link_to "Cancelar", patient.persisted? ? patient_path(patient) : patients_path, class: "px-6 py-2.5 text-sm text-gray-400 hover:text-gray-600 transition-colors" %>
+  </div>
 <% end %>

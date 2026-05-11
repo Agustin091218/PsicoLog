@@ -1,14 +1,15 @@
 <%= render "shared/flash" %>
 
-<div class="max-w-md mx-auto mt-16">
-  <div class="text-center mb-8">
-    <img src="/logo.svg" alt="Psicolog" class="w-14 h-14 mx-auto mb-4 drop-shadow-lg">
-    <h1 class="text-2xl font-semibold text-gray-900">Registrarse</h1>
+<div class="max-w-sm mx-auto mt-20">
+  <div class="text-center mb-10">
+    <img src="/logo.svg" alt="Psicolog" class="w-14 h-14 mx-auto mb-6">
+    <h1 class="text-2xl font-semibold text-gray-900 tracking-tight">Crear cuenta</h1>
+    <p class="text-sm text-gray-400 mt-2">Registrate para empezar a usar Psicolog</p>
   </div>
 
-  <%= form_with model: @user, local: true, class: "space-y-4" do |f| %>
+  <%= form_with model: @user, local: true, class: "space-y-5" do |f| %>
     <% if @user.errors.any? %>
-      <div class="bg-red-50/80 backdrop-blur-sm border border-red-200/60 rounded-xl p-4 text-sm text-red-700">
+      <div class="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700">
         <p class="font-medium flex items-center gap-1.5">
           <svg class="w-4 h-4 text-red-500" viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
           <%= pluralize(@user.errors.count, "error") %> impidieron el registro:
@@ -21,47 +22,41 @@
       </div>
     <% end %>
 
-    <div class="grid grid-cols-2 gap-3">
+    <div class="grid grid-cols-2 gap-4">
       <div>
-        <%= f.label :first_name, class: "block text-sm font-medium text-gray-600 mb-1.5" %>
-        <%= f.text_field :first_name, required: true, autofocus: true,
-            class: "w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none text-sm bg-white shadow-sm transition-shadow" %>
+        <%= f.label :first_name, "Nombre", class: "block text-sm font-medium text-gray-500 mb-2" %>
+        <%= f.text_field :first_name, required: true, autofocus: true, placeholder: "Juan",
+            class: "w-full px-0 py-2.5 border-0 border-b border-gray-200 focus:ring-0 focus:border-brand-500 outline-none text-sm bg-transparent placeholder:text-gray-300 transition-colors" %>
       </div>
       <div>
-        <%= f.label :last_name, class: "block text-sm font-medium text-gray-600 mb-1.5" %>
-        <%= f.text_field :last_name, required: true,
-            class: "w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none text-sm bg-white shadow-sm transition-shadow" %>
+        <%= f.label :last_name, "Apellido", class: "block text-sm font-medium text-gray-500 mb-2" %>
+        <%= f.text_field :last_name, required: true, placeholder: "Pérez",
+            class: "w-full px-0 py-2.5 border-0 border-b border-gray-200 focus:ring-0 focus:border-brand-500 outline-none text-sm bg-transparent placeholder:text-gray-300 transition-colors" %>
       </div>
     </div>
 
     <div>
-      <%= f.label :email, class: "block text-sm font-medium text-gray-600 mb-1.5" %>
-      <%= f.email_field :email, required: true,
-          class: "w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none text-sm bg-white shadow-sm transition-shadow" %>
+      <%= f.label :email, "Correo electrónico", class: "block text-sm font-medium text-gray-500 mb-2" %>
+      <%= f.email_field :email, required: true, placeholder: "tu@email.com",
+          class: "w-full px-0 py-2.5 border-0 border-b border-gray-200 focus:ring-0 focus:border-brand-500 outline-none text-sm bg-transparent placeholder:text-gray-300 transition-colors" %>
     </div>
 
     <div>
-      <%= f.label :phone, class: "block text-sm font-medium text-gray-600 mb-1.5" %>
-      <%= f.phone_field :phone,
-          class: "w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none text-sm bg-white shadow-sm transition-shadow" %>
+      <%= f.label :phone, "Teléfono", class: "block text-sm font-medium text-gray-500 mb-2" %>
+      <%= f.phone_field :phone, placeholder: "+54 11 1234-5678",
+          class: "w-full px-0 py-2.5 border-0 border-b border-gray-200 focus:ring-0 focus:border-brand-500 outline-none text-sm bg-transparent placeholder:text-gray-300 transition-colors" %>
     </div>
 
     <div>
-      <%= f.label :password, class: "block text-sm font-medium text-gray-600 mb-1.5" %>
-      <%= f.password_field :password, required: true,
-          class: "w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none text-sm bg-white shadow-sm transition-shadow" %>
+      <%= f.label :password, "Contraseña", class: "block text-sm font-medium text-gray-500 mb-2" %>
+      <%= f.password_field :password, required: true, placeholder: "Mínimo 6 caracteres",
+          class: "w-full px-0 py-2.5 border-0 border-b border-gray-200 focus:ring-0 focus:border-brand-500 outline-none text-sm bg-transparent placeholder:text-gray-300 transition-colors" %>
     </div>
 
-    <div>
-      <%= f.label :password_confirmation, class: "block text-sm font-medium text-gray-600 mb-1.5" %>
-      <%= f.password_field :password_confirmation, required: true,
-          class: "w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none text-sm bg-white shadow-sm transition-shadow" %>
-    </div>
-
-    <%= f.submit "Crear cuenta", class: "w-full py-2.5 px-4 bg-brand-600 text-white rounded-xl hover:bg-brand-700 cursor-pointer font-medium text-sm transition-colors shadow-sm" %>
+    <%= f.submit "Crear cuenta", class: "w-full py-3 px-4 bg-brand-600 text-white rounded-xl hover:bg-brand-700 cursor-pointer font-medium text-sm transition-colors mt-8" %>
   <% end %>
 
-  <p class="mt-6 text-sm text-gray-400 text-center">
-    ¿Ya tienes cuenta? <%= link_to "Iniciar sesión", sign_in_path, class: "text-brand-600 hover:text-brand-700 font-medium transition-colors" %>
+  <p class="mt-8 text-sm text-gray-400 text-center">
+    ¿Ya tenés cuenta? <%= link_to "Iniciar sesión", sign_in_path, class: "text-brand-600 hover:text-brand-700 font-medium transition-colors" %>
   </p>
 </div>

@@ -1,84 +1,53 @@
 <%= render "shared/flash" %>
 
-<div class="flex items-center justify-between mb-6">
-  <div>
-    <h1 class="text-2xl font-semibold text-gray-900"><%= @patient.full_name %></h1>
-    <p class="text-sm text-gray-400 mt-0.5 flex items-center gap-3">
-      Notas
-      <%= link_to patient_path(@patient), class: "inline-flex items-center gap-1 text-xs text-brand-600 hover:text-brand-700 transition-colors" do %>
-        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-        Ver paciente
-      <% end %>
-    </p>
-  </div>
-  <%= link_to new_patient_note_path(@patient), class: "inline-flex items-center gap-1.5 px-4 py-2.5 bg-brand-600 text-white text-sm font-medium rounded-xl hover:bg-brand-700 transition-colors shadow-sm" do %>
-    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-    Nueva nota
+<div class="mb-10">
+  <%= link_to patient_path(@patient), class: "inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-600 transition-colors mb-4" do %>
+    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    <%= @patient.full_name %>
   <% end %>
+  
+  <div class="flex items-center justify-between mb-2">
+    <h1 class="text-3xl font-bold text-gray-800 tracking-tight">Notas</h1>
+    <%= link_to new_patient_note_path(@patient), class: "inline-flex items-center gap-2 px-4 py-2.5 bg-gray-800 text-white text-sm font-medium rounded-xl hover:bg-gray-700 transition-colors" do %>
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      Nueva
+    <% end %>
+  </div>
+  <p class="text-sm text-gray-400"><%= @notes.count %> nota<%= "s" unless @notes.count == 1 %></p>
 </div>
 
-<%= search_form_for @q, url: patient_notes_path(@patient), method: :get, class: "flex gap-3 mb-6" do |f| %>
-  <div class="flex-1 relative">
-    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-    <%= f.search_field :content_cont, placeholder: "Buscar notas...",
-        class: "w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none text-sm bg-white shadow-sm transition-shadow" %>
+<%= search_form_for @q, url: patient_notes_path(@patient), method: :get, class: "mb-10" do |f| %>
+  <div class="flex gap-2">
+    <div class="flex-1 relative">
+      <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <%= f.search_field :content_cont, placeholder: "Buscar notas...",
+          class: "w-full pl-10 pr-4 py-2.5 bg-white border-0 rounded-xl outline-none text-sm placeholder:text-gray-400 shadow-[0_2px_8px_rgba(0,0,0,0.04)] focus:shadow-[0_2px_12px_rgba(0,0,0,0.08)] transition-shadow" %>
+    </div>
+    <%= f.submit "Buscar", class: "px-4 py-2.5 bg-white text-sm font-medium text-gray-600 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_2px_12px_rgba(0,0,0,0.08)] transition-shadow cursor-pointer" %>
+    <%= link_to patient_notes_path(@patient), class: "px-3 py-2.5 text-sm text-gray-400 hover:text-gray-600 transition-colors flex items-center" do %>
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+    <% end %>
   </div>
-  <%= f.submit "Buscar", class: "px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 cursor-pointer transition-colors shadow-sm" %>
-  <%= link_to patient_notes_path(@patient), class: "px-3 py-2.5 text-sm text-gray-400 hover:text-gray-600 transition-colors flex items-center" do %>
-    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-  <% end %>
 <% end %>
 
 <% if @notes.any? %>
-  <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
-    <table class="w-full">
-      <thead class="bg-gray-50/50 border-b border-gray-100">
-        <tr>
-          <th class="text-left px-5 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider">
-            <%= sort_link(@q, :note_type, "Tipo", class: "hover:text-gray-600 transition-colors") %>
-          </th>
-          <th class="text-left px-5 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider">
-            <%= sort_link(@q, :recorded_at, "Fecha", class: "hover:text-gray-600 transition-colors") %>
-          </th>
-          <th class="text-left px-5 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider">Contenido</th>
-          <th class="px-5 py-3"></th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-gray-50">
-        <% @notes.each do |note| %>
-          <tr class="hover:bg-gray-50/50 transition-colors">
-            <td class="px-5 py-3.5">
-              <span class="text-xs font-medium text-brand-600 bg-brand-50/80 px-2.5 py-1 rounded-lg"><%= note.translated_type %></span>
-            </td>
-            <td class="px-5 py-3.5 text-sm text-gray-400"><%= l(note.recorded_at, format: :short) %></td>
-            <td class="px-5 py-3.5 text-sm text-gray-600 max-w-xs truncate"><%= truncate(note.content, length: 80) %></td>
-            <td class="px-5 py-3.5 flex items-center gap-2 justify-end">
-              <%= link_to patient_note_path(@patient, note), class: "inline-flex items-center gap-1 px-2.5 py-1.5 text-xs text-brand-600 hover:text-brand-700 hover:bg-brand-50 rounded-lg transition-colors" do %>
-                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-                Ver
-              <% end %>
-              <%= link_to edit_patient_note_path(@patient, note), class: "inline-flex items-center gap-1 px-2.5 py-1.5 text-xs text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors" do %>
-                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                Editar
-              <% end %>
-              <%= button_to patient_note_path(@patient, note), method: :delete,
-                  class: "inline-flex items-center gap-1 px-2.5 py-1.5 text-xs text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors",
-                  form: { data: { turbo_confirm: "¿Archivar esta nota?" } } do %>
-                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-                Archivar
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+  <div class="space-y-6">
+    <% @notes.each do |note| %>
+      <%= link_to patient_note_path(@patient, note), class: "block group" do %>
+        <div class="flex items-baseline gap-4 mb-1.5">
+          <span class="text-xs font-medium px-2.5 py-1 rounded-full <%= note.note_type == 'session_note' ? 'bg-green-50 text-green-700' : (note.note_type == 'initial_interview' ? 'bg-amber-50 text-amber-700' : (note.note_type == 'follow_up' ? 'bg-blue-50 text-blue-700' : (note.note_type == 'emergency' ? 'bg-red-50 text-red-700' : 'bg-gray-100 text-gray-600'))) %>"><%= note.translated_type %></span>
+          <span class="text-xs text-gray-400"><%= l(note.recorded_at, format: :long) %></span>
+        </div>
+        <p class="text-sm text-gray-600 leading-relaxed line-clamp-2 group-hover:text-gray-800 transition-colors"><%= truncate(note.content, length: 180) %></p>
+      <% end %>
+    <% end %>
   </div>
 <% else %>
-  <div class="text-center py-16 bg-white rounded-2xl border border-gray-100 shadow-sm">
-    <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-      <svg class="w-8 h-8 text-gray-400" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+  <div class="text-center py-20">
+    <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
+      <svg class="w-7 h-7 text-gray-400" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
     </div>
-    <p class="text-gray-400 text-sm">Aún no hay notas</p>
-    <%= link_to "Crear primera nota", new_patient_note_path(@patient), class: "inline-block mt-3 text-sm text-brand-600 hover:text-brand-700 font-medium transition-colors" %>
+    <p class="text-sm text-gray-400 mb-1">Sin notas aún</p>
+    <p class="text-xs text-gray-300">Escribí tu primera nota de sesión</p>
   </div>
 <% end %>
