@@ -7,6 +7,9 @@ class PatientsController < ApplicationController
   end
 
   def show
+    @initial_interview = @patient.notes.active.find_by(note_type: "initial_interview")
+    @recent_notes = @patient.notes.active.where.not(id: @initial_interview&.id).ordered.limit(5)
+    @total_notes = @patient.notes.active.count
   end
 
   def new

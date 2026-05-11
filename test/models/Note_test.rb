@@ -104,7 +104,7 @@ class NoteTest < ActiveSupport::TestCase
   end
 
   test "note_types exposes the expected constants" do
-    assert_equal %w[session_note general_note quick_note], Note.note_types
+    assert_equal %w[session_note initial_interview follow_up emergency discharge general_note quick_note], Note.note_types
   end
 
   private

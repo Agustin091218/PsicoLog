@@ -16,28 +16,36 @@ export default class extends Controller {
     this.fieldTarget.value = this.editorTarget.innerHTML
   }
 
-  bold() {
+  bold(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    this.editorTarget.focus()
     document.execCommand("bold")
-    this.editorTarget.focus()
   }
 
-  italic() {
+  italic(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    this.editorTarget.focus()
     document.execCommand("italic")
-    this.editorTarget.focus()
   }
 
-  list() {
+  list(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    this.editorTarget.focus()
     document.execCommand("insertUnorderedList")
-    this.editorTarget.focus()
   }
 
-  quickNote() {
+  quickNote(e) {
+    e.preventDefault()
+    e.stopPropagation()
     const now = new Date().toLocaleString("es-AR", {
       dateStyle: "medium",
       timeStyle: "short"
     })
+    this.editorTarget.focus()
     document.execCommand("insertHTML", false,
       "<h2>Nota rápida — " + now + "</h2><p><br></p>")
-    this.editorTarget.focus()
   }
 }
