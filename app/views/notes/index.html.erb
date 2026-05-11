@@ -1,0 +1,71 @@
+<%= render "shared/flash" %>
+
+<div class="flex items-center justify-between mb-6">
+  <div>
+    <h1 class="text-2xl font-semibold"><%= @patient.full_name %></h1>
+    <p class="text-sm text-gray-500 mt-1">Notes</p>
+  </div>
+  <%= link_to "New Note", new_patient_note_path(@patient),
+      class: "inline-flex items-center px-4 py-2 bg-brand-600 text-white text-sm font-medium rounded-lg hover:bg-brand-700" %>
+</div>
+
+<%= search_form_for @q, url: patient_notes_path(@patient), method: :get, class: "flex gap-3 mb-6" do |f| %>
+  <%= f.search_field :content_cont, placeholder: "Search notes...",
+      class: "flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm" %>
+  <%= f.submit "Search", class: "px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer" %>
+  <%= link_to "Clear", patient_notes_path(@patient), class: "px-4 py-2 text-sm text-gray-500 hover:text-gray-700 flex items-center" %>
+<% end %>
+
+<% if @notes.any? %>
+  <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+    <table class="w-full">
+      <thead class="bg-gray-50 border-b border-gray-200">
+        <tr>
+          <th class="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <%= sort_link(@q, :note_type, "Type") %>
+          </th>
+          <th class="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <%= sort_link(@q, :recorded_at, "Date") %>
+          </th>
+          <th class="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Content</th>
+          <th class="px-4 py-3"></th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100">
+        <% @notes.each do |note| %>
+          <tr class="hover:bg-gray-50">
+            <td class="px-4 py-3">
+              <span class="text-xs font-medium text-brand-600 bg-brand-50 px-2 py-1 rounded">
+                <%= note.note_type.humanize %>
+              </span>
+            </td>
+            <td class="px-4 py-3 text-sm text-gray-500">
+              <%= note.recorded_at.strftime("%b %d, %Y") %>
+            </td>
+            <td class="px-4 py-3 text-sm text-gray-700 max-w-xs truncate">
+              <%= truncate(note.content, length: 80) %>
+            </td>
+            <td class="px-4 py-3 flex items-center gap-2 justify-end">
+              <%= link_to "View", patient_note_path(@patient, note),
+                  class: "text-sm text-brand-600 hover:underline" %>
+              <%= link_to "Edit", edit_patient_note_path(@patient, note),
+                  class: "text-sm text-gray-500 hover:text-gray-700" %>
+              <%= button_to "Archive", patient_note_path(@patient, note), method: :delete,
+                  class: "text-sm text-red-500 hover:text-red-700",
+                  form: { data: { turbo_confirm: "Archive this note?" } } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="text-center py-12 bg-white rounded-lg border border-gray-200">
+    <p class="text-gray-500">No notes yet.</p>
+    <%= link_to "Add your first note", new_patient_note_path(@patient), class: "mt-2 inline-block text-brand-600 hover:underline text-sm" %>
+  </div>
+<% end %>
+
+<div class="mt-4">
+  <%= link_to "Back to patients", patients_path, class: "text-sm text-gray-500 hover:underline" %>
+</div>
