@@ -2,13 +2,13 @@
 
 <div class="mb-10">
   <div class="flex items-center justify-between mb-2">
-    <h1 class="text-3xl font-bold text-gray-800 tracking-tight">Todas las notas</h1>
+    <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 tracking-tight">Todas las notas</h1>
   </div>
   <p class="text-sm text-gray-400"><%= @notes.count %> nota<%= "s" unless @notes.count == 1 %></p>
 </div>
 
 <%= search_form_for @q, url: notes_path, method: :get, class: "mb-10" do |f| %>
-  <div class="flex gap-2">
+  <div class="flex flex-col sm:flex-row gap-2">
     <div class="flex-1 relative">
       <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
       <%= f.search_field :content_cont, placeholder: "Buscar notas...",
@@ -35,7 +35,7 @@
           <span class="text-xs font-medium px-2.5 py-1 rounded-full <%= note.note_type == 'session_note' ? 'bg-green-50 text-green-700' : (note.note_type == 'initial_interview' ? 'bg-amber-50 text-amber-700' : (note.note_type == 'follow_up' ? 'bg-blue-50 text-blue-700' : (note.note_type == 'emergency' ? 'bg-red-50 text-red-700' : 'bg-gray-100 text-gray-600'))) %>"><%= note.translated_type %></span>
           <span class="text-xs text-gray-400"><%= l(note.recorded_at, format: :long) %></span>
         </div>
-        <p class="text-sm text-gray-600 leading-relaxed line-clamp-2 group-hover:text-gray-800 transition-colors"><%= truncate(note.content, length: 180) %></p>
+        <p class="text-sm text-gray-600 leading-relaxed line-clamp-2 group-hover:text-gray-800 transition-colors"><%= truncate(strip_tags(note.content), length: 180) %></p>
       <% end %>
     <% end %>
   </div>

@@ -13,6 +13,20 @@ class NotesController < ApplicationController
     @notes = @q.result.ordered.includes(:patient)
   end
 
+  def quick_create
+    @note = @patient.notes.new(
+      content: params[:content],
+      note_type: "quick_note",
+      recorded_at: Time.current
+    )
+
+    if @note.save
+      render json: { success: true, notice: "Nota rápida creada." }
+    else
+      render json: { success: false, error: @note.errors.full_messages.join(", ") }
+    end
+  end
+
   def show
   end
 

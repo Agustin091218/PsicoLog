@@ -1,11 +1,11 @@
 <%= render "shared/flash" %>
 
-<div class="flex items-center justify-between mb-10">
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
   <div>
     <%= link_to patient_path(@patient), class: "text-sm text-gray-400 hover:text-gray-600 transition-colors mb-1 inline-block" do %>
       &larr; Volver al paciente
     <% end %>
-    <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Resumen de sesión</h1>
+    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">Resumen de sesión</h1>
   </div>
   <%= link_to new_patient_note_path(@patient), class: "inline-flex items-center gap-2 px-4 py-2.5 bg-brand-600 text-white text-sm font-medium rounded-xl hover:bg-brand-700 transition-colors" do %>
     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>

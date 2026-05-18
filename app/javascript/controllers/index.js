@@ -1,7 +1,6 @@
 import { application } from "./application"
+import QuickNoteController from "./quick_note_controller"
+import NoteEditorController from "./note_editor_controller"
 
-import controllers from "./**/*_controller.js"
-
-controllers.forEach((controller) => {
-  application.register(controller.name, controller.module.default)
-})
+application.register("quick-note", QuickNoteController)
+application.register("note-editor", NoteEditorController)
